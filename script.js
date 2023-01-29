@@ -173,18 +173,19 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   let clicked = false;
   newTile.addEventListener("click", () => {
     if (clicked == false){
-     newTile.classList.add("active");
-    clicked = true;
+      newTile.classList.add("active");
+      newTile.style.marginBottom= "70px";
+      clicked = true;
       console.log(clicked);
       return;
     }
     if (clicked == true){
-     newTile.classList.remove("active");
-    clicked = false;
+      newTile.classList.remove("active");
+      newTile.style.marginBottom= "20px";
+      clicked = false;
       console.log(clicked);
       return;
     }
-   
   });
   newTile.innerHTML = `<div class="name expense">${expenseName}</div><div class="amount expense">${expenseValue}</div> <div class="tilePLN expense">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
@@ -265,20 +266,22 @@ const listCreatorDebt = (expenseName, expenseValue) => {
   let newTile = document.createElement("div");
   newTile.classList.add("tile");
   list.appendChild(newTile);
+  let clicked = false;
   newTile.addEventListener("click", () => {
     if (clicked == false){
-     newTile.classList.add("active");
-    clicked = true;
+      newTile.classList.add("active");
+      newTile.style.marginBottom= "70px";
+      clicked = true;
       console.log(clicked);
       return;
     }
     if (clicked == true){
-     newTile.classList.remove("active");
-    clicked = false;
+      newTile.classList.remove("active");
+      newTile.style.marginBottom= "20px";
+      clicked = false;
       console.log(clicked);
       return;
     }
-   
   });
   newTile.innerHTML = `<div class="name debt">${expenseName}</div><div class="amount debt">${expenseValue}</div> <div class="tilePLN debt">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
