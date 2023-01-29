@@ -27,8 +27,8 @@ const setInput = document.querySelector(".setInput");
 let debts = 0.00;
 let category = ""
 // let expenses = 0;
-
-
+inputName.addEventListener ("click", () => { window.scrollTo(0, document.body.scrollHeight);});
+inputAmnt.addEventListener ("click", () => { window.scrollTo(0, document.body.scrollHeight);});
 
 
 // NAVIGATION
@@ -72,13 +72,12 @@ expandMoreBtn.addEventListener ("click", () => {
   
  
 });
-
 function showInput() {
 	inputs.classList.remove("hidden");
 	addBtn.classList.add("hidden");
 	setBtn.classList.add("hidden");
 	mainScreen.classList.add("hidden");
-  window.scrollTo(0, document.body.scrollHeight);
+ 
 };
 
 function showSettings() {
