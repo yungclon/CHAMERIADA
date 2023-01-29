@@ -78,6 +78,7 @@ function showInput() {
 	addBtn.classList.add("hidden");
 	setBtn.classList.add("hidden");
 	mainScreen.classList.add("hidden");
+  window.scrollTo(0, document.body.scrollHeight);
 };
 
 function showSettings() {

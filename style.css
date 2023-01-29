@@ -439,6 +439,7 @@ grid-column:1 ;
 grid-row: 6;
 }
 
+
 .inputs.hidden{
 bottom:-350px;
 transition: all 0.3s linear ;
