@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet" href="style.css" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+	<title>Xpense v3</title>
+</head>
+<body>
+<!-- SETTINGS -->
+<div class="settings hidden">
+
+	<div class="salaryText">Enter Your Salary:</div>
+	<input class="setInput" type="number" placeholder="00.00">
+	<div class="setPLN">PLN</div>
+	<div class="setButtons">
+		<span class="SetConfirmBtn material-symbols-rounded">done</span>
+		<span class="SetCancelBtn material-symbols-rounded">close</span>
+	</div>
+</div>
+
+<!-- INPUT SCREEN -->
+<div class="inputs hidden">
+	<input class="inputName" type="text" placeholder="Name">
+	<input class="inputAmnt" type="number" placeholder="00.00">
+	<div class="categories">
+		<div class="expenseCat">Expense</div>
+		<div class="debtCat">Debt</div>
+	
+	</div>
+</div>
+
+<!-- Main Screen -->
+<div class="wraper ">
+	<div class="dashboard ">
+		<div class="mainSection">
+			<div class="balance">Balance</div>
+			<div class="balanceAmnt">0.00</div>
+			<div class="balancePLN">PLN</div>
+
+			<div class="plannedBalance">Planned Balance</div>
+			<div class="plannedBalanceAmnt">0.00</div>
+			<div class="plannedBalancePLN">PLN</div>
+		</div>
+		<div class="sectionToHide blockDisplay ">
+
+			<div class="expenses">Expenses</div>
+			<div class="expensesAmnt">0.00</div>
+			<div class="expensesPLN">PLN</div>
+			
+			<div class="debts">Debts</div>
+			<div class="debtsAmnt">0.00</div>
+			<div class="debtsPLN">PLN</div>
+			
+			<!-- <div class="savings">Savings</div>
+			<div class="savingsAmnt">0.00</div>
+			<div class="savingsPLN">PLN</div> -->
+		</div>
+		<span class="expandLessBtn material-symbols-rounded" style="display: none;">expand_less</span>
+		<span class="expandMoreBtn material-symbols-rounded">expand_more</span>
+	</div>
+	<ul class="list">
+		<!-- <div class="tile ">
+			<div class="name">Bike</div>
+			<div class="amount">50.30</div>
+			<div class="tileControlsWraper">
+				<div class="editBtn">
+					<span 
+					class="btnIcon adjustEditIcon material-symbols-rounded">
+					edit_square
+					</span>
+				</div>
+				<div class="checkoutBtn">
+					<span 
+					class="btnIcon adjustCheckIcon material-symbols-rounded">
+					payments
+					</span>
+				</div>
+				<div class="delBtn">
+					<span 
+					class="btnIcon adjustDelIcon material-symbols-rounded">
+					delete
+					</span>
+				</div>
+				
+			</div>
+		</div> -->
+
+	</ul>
+
+	
+</div>
+
+
+<span class="addBtn material-symbols-rounded">add</span>
+<span class="setBtn material-symbols-rounded">tune</span>
+
+	<script src="script.js"></script>	
+</body>
+</html>
