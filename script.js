@@ -170,6 +170,22 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   let newTile = document.createElement("div");
   newTile.classList.add("tile");
   list.appendChild(newTile);
+  let clicked = false;
+  newTile.addEventListener("click", () => {
+    if (clicked == false){
+     newTile.classList.add("active");
+    clicked = true;
+      console.log(clicked);
+      return;
+    }
+    if (clicked == true){
+     newTile.classList.remove("active");
+    clicked = false;
+      console.log(clicked);
+      return;
+    }
+   
+  });
   newTile.innerHTML = `<div class="name expense">${expenseName}</div><div class="amount expense">${expenseValue}</div> <div class="tilePLN expense">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
   tileControlsWraper.classList.add("tileControlsWraper")
@@ -249,6 +265,21 @@ const listCreatorDebt = (expenseName, expenseValue) => {
   let newTile = document.createElement("div");
   newTile.classList.add("tile");
   list.appendChild(newTile);
+  newTile.addEventListener("click", () => {
+    if (clicked == false){
+     newTile.classList.add("active");
+    clicked = true;
+      console.log(clicked);
+      return;
+    }
+    if (clicked == true){
+     newTile.classList.remove("active");
+    clicked = false;
+      console.log(clicked);
+      return;
+    }
+   
+  });
   newTile.innerHTML = `<div class="name debt">${expenseName}</div><div class="amount debt">${expenseValue}</div> <div class="tilePLN debt">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
   tileControlsWraper.classList.add("tileControlsWraper")

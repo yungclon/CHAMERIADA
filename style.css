@@ -114,12 +114,12 @@ margin-bottom: 20px;
 transition: all 0.2s linear 0.5s;
 box-shadow: var(--shadow);
 }
-.tile:hover{
+/* .tile:hover{
 cursor: pointer;
 margin-bottom: 80px;
 transition: all 0.2s linear 0.5s;
-}
-.tile:hover .tileControlsWraper{
+} */
+.tile.active .tileControlsWraper{
 top:130px;
 transition: all 0.2s linear 0.5s;
 z-index: 1;
