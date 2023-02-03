@@ -251,7 +251,9 @@ const listCreatorExpense = (expenseName, expenseValue) => {
     paidCheck = true;
     
   });
-
+  let devider = document.createElement("div");
+  devider.classList.add("devider");
+  newTile.appendChild(devider);
 
   tileControlsWraper.appendChild(editButton);
   tileControlsWraper.appendChild(deleteButton);
@@ -261,6 +263,7 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   newTile.addEventListener("click", () => {
     if (clicked == false){
       tileControlsWraper.classList.add("active");
+      newTile.classList.add("active");
       newTile.style.marginBottom= "80px";
       clicked = true;
       console.log(clicked);
@@ -268,6 +271,7 @@ const listCreatorExpense = (expenseName, expenseValue) => {
     }
     if (clicked == true){
       tileControlsWraper.classList.remove("active");
+      newTile.classList.remove("active");
       newTile.style.marginBottom= "20px";
       clicked = false;
       console.log(clicked);

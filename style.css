@@ -126,13 +126,16 @@ transition: all 0.2s linear 0.5s;
 box-shadow: var(--shadow);
 /* z-index: 1; */
 }
+.tile.active{
+transform: translateX(-150px);
+}
 .tile:hover{
 cursor: pointer;
 
 transition: all 0.2s linear;
 }
 .tileControlsWraper.active {
-transform: translateY(70px);
+transform: translateX(200px);
 transition: all 0.2s linear;
 z-index: -1;
 
@@ -148,6 +151,15 @@ justify-self: center;
 justify-content: space-between;
 width:160px;
 }
+/* .devider{
+background-color: #a03ff0;
+opacity: 50%;
+width: auto;
+height: 100px;
+grid-column-start: 1;
+grid-column-end: 3;
+margin: 10px;
+} */
 .name{
 font-size: 1.5em;
 font-weight: 500;
