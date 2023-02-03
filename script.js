@@ -14,6 +14,7 @@ const inputAmnt = document.querySelector(".inputAmnt");
 const checkoutBtn = document.querySelector(".checkoutBtn");
 const expandMoreBtn = document.querySelector(".expandMoreBtn");
 const expandLessBtn = document.querySelector(".expandLessBtn");
+let dashboardExpander = document.querySelector(".dashboardExpander");
 
 
 const list = document.querySelector(".list");
@@ -61,13 +62,13 @@ dashboard.addEventListener ("click", () => {
 
 if (dashboardExpanded == false){
 console.log(dashboardExpanded);
-  dashboard.classList.add("expanded");
+  dashboardExpander.classList.add("active");
   dashboardExpanded = true;
   return;
 };
 if (dashboardExpanded == true){
   console.log(dashboardExpanded);
-  dashboard.classList.remove("expanded");
+  dashboardExpander.classList.remove("active");
   dashboardExpanded = false;
   return;
 };
