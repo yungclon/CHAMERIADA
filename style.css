@@ -107,6 +107,7 @@ transition-duration: 1s;
 }
 .tile{
 left:0px;
+/* transform: translateZ(1px); */
 transition-duration: 1s;
 position: relative;
 background-color: var(--tile);
@@ -123,22 +124,23 @@ grid-template-rows: 40% 60%;
 margin-bottom: 20px;
 transition: all 0.2s linear 0.5s;
 box-shadow: var(--shadow);
-z-index: 3;
+/* z-index: 1; */
 }
 .tile:hover{
 cursor: pointer;
 
 transition: all 0.2s linear;
 }
-.tile.active .tileControlsWraper{
+.tileControlsWraper.active {
 transform: translateY(70px);
 transition: all 0.2s linear;
+z-index: -1;
 
 } 
 .tileControlsWraper{
-z-index: 4;
+/* transform: translateZ(-1px); */
+z-index: -1;
 transition: all 0.2s linear;
-
 position: absolute;
 top: 65px;
 display: flex;
@@ -185,6 +187,7 @@ background-color: var(--editBtnHover);
 transform: scale(1);
 }
 .editBtn{
+
 box-shadow: var(--shadow);
 display: flex;
 background-color: var(--greyBtn);
