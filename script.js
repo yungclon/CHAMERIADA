@@ -34,25 +34,25 @@ inputAmnt.addEventListener ("click", () => { window.scrollTo(0, document.body.sc
 
 
 // NAVIGATION
-expandLessBtn.addEventListener ("click", () => {
+// expandLessBtn.addEventListener ("click", () => {
   
-  let sectionToHide = document.querySelector(".sectionToHide");
-  sectionToHide.classList.add("hiddenVisually");
-    setTimeout(function () {
+//   let sectionToHide = document.querySelector(".sectionToHide");
+//   sectionToHide.classList.add("hiddenVisually");
+//     setTimeout(function () {
    
-      let sectionToHide = document.querySelector(".sectionToHide");
-      sectionToHide.classList.remove("expanded");
-      sectionToHide.classList.add("blockDisplay");
-      let dashboard = document.querySelector(".dashboard");
-      dashboard.classList.remove("expanded");
-      // expandLessBtn.classList.add("hidden");
-      // expandMoreBtn.classList.remove("hidden");
-  },100);
-  let expandLessBtn = document.querySelector(".expandLessBtn");
-  let expandMoreBtn = document.querySelector(".expandMoreBtn");
-  expandLessBtn.style.display = "none";
-  expandMoreBtn.style.display = "flex";
-});
+//       let sectionToHide = document.querySelector(".sectionToHide");
+//       sectionToHide.classList.remove("expanded");
+//       sectionToHide.classList.add("blockDisplay");
+//       let dashboard = document.querySelector(".dashboard");
+//       dashboard.classList.remove("expanded");
+//       // expandLessBtn.classList.add("hidden");
+//       // expandMoreBtn.classList.remove("hidden");
+//   },100);
+//   let expandLessBtn = document.querySelector(".expandLessBtn");
+//   let expandMoreBtn = document.querySelector(".expandMoreBtn");
+//   expandLessBtn.style.display = "none";
+//   expandMoreBtn.style.display = "flex";
+// });
 
 
 let dashboardExpanded = false;
@@ -63,12 +63,14 @@ dashboard.addEventListener ("click", () => {
 if (dashboardExpanded == false){
 console.log(dashboardExpanded);
   dashboardExpander.classList.add("active");
+  dashboard.style.marginBottom = "220px"
   dashboardExpanded = true;
   return;
 };
 if (dashboardExpanded == true){
   console.log(dashboardExpanded);
   dashboardExpander.classList.remove("active");
+  dashboard.style.marginBottom = "40px"
   dashboardExpanded = false;
   return;
 };

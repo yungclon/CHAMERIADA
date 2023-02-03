@@ -276,20 +276,36 @@ transform:scaleY(2);
 }
 .dashboardExpander{
 margin-bottom: 20px;
-width: 300px;
-height: 215px;
-background-color: #cc4848;
+width: 290px;
+height: 240px;
+background-color: var(--delBtnHover);
 position: absolute;
-left: 0px;
+top:-20px;
+left: 5px;
 transition: all 0.2s linear;
 border-radius: 20px;
-z-index: -1;
+z-index: -2;
+padding: 20px;
+/* opacity: 50%; */
+box-shadow: var(--shadow);
+
 }
 .dashboardExpander.active{
-transform: translateY(150px);
+transform: translateY(180px);
 transition: all 0.2s linear;
 }
+.hidder{
+position: absolute;
+width: 300px;
+background-color: var(--background);
+/* background-color: var(--checkoutBtnHover); */
+z-index: -1;
+height: 60px;
+top:-25px;
+left: 0;
+}
 .dashboard{
+
 position: relative;
 cursor: pointer;
 transition-duration: 200ms;
@@ -297,14 +313,14 @@ grid-column: 1;
 background-color: var(--dashboard);
 /* width: 260px; */
 width: 300px;
-height: 215px;
+height: 200px;
 padding: 20px;
 border-radius: 20px;
 /* GRID */
 /* display: grid;
 grid-template-rows: 30px 50px 30px 50px auto;
 grid-template-columns: 80% 20%; */
-margin-bottom: 20px;
+margin-bottom: 40px;
 box-shadow: var(--shadow);
 }
 .mainSection{
@@ -322,6 +338,10 @@ transition-duration: 100ms;
 .sectionToHide{
 opacity: 100%;
 transition-duration: 100ms;
+grid-column: 1;
+display: grid;
+grid-template-rows: 40px 30px 50px 30px 50px;
+grid-template-columns: 80% 20%;
 }
 .sectionToHide.expanded{
 
@@ -389,7 +409,7 @@ font-size: 1.5em;
 font-weight: 500;
 color: var(--dashboardNameText);
 grid-column: 1;
-grid-row: 1;
+grid-row: 2;
 }
 .expensesAmnt{
 color: var(--dashboardAmountText);
@@ -397,11 +417,11 @@ display: flex;
 justify-content: end;
 font-size: 3em;
 grid-column: 1;
-grid-row: 2;
+grid-row: 3;
 }
 .expensesPLN{
 grid-column: 2;
-grid-row: 2;
+grid-row: 3;
 align-self: end;
 position: relative;
 bottom: 10px;
@@ -411,7 +431,7 @@ color: var(--plnText);
 }
 .debtsPLN{
 grid-column: 2;
-grid-row: 4;
+grid-row: 5;
 align-self: end;
 position: relative;
 bottom: 10px;
@@ -424,7 +444,7 @@ font-size: 1.5em;
 font-weight: 500;
 color: var(--dashboardNameText);
 grid-column: 1;
-grid-row: 3;
+grid-row: 4;
 }
 .debtsAmnt{
 display: flex;
@@ -432,7 +452,7 @@ justify-content: end;
 color: var(--dashboardAmountText);
 font-size: 3em;
 grid-column: 1;
-grid-row: 4;
+grid-row: 5;
 }
 
 .savingsPLN{
