@@ -263,8 +263,8 @@ grid-column: 1;
 background-color: var(--dashboard);
 color: var(--dashboardAmountText);
 /* width: 260px; */
-width: 300px;
-height: 390px;
+/* width: 300px; */
+/* height: 390px; */
 padding: 20px;
 border-radius: 20px;
 /* GRID */
@@ -274,12 +274,13 @@ grid-template-columns: 80% 20%;
 margin-bottom: 20px;
 }
 .dashboard{
+cursor: pointer;
 transition-duration: 200ms;
 grid-column: 1;
 background-color: var(--dashboard);
 /* width: 260px; */
 width: 300px;
-height: 215px;
+/* height: 215px; */
 padding: 20px;
 border-radius: 20px;
 /* GRID */
@@ -605,8 +606,9 @@ transition: all 0.2s linear;
 .setBtn{
 /* box-shadow: var(--shadow); */
 /* background-color: var(--greyBtn); */
+color: var(--debtsTile);
 position: absolute;
-top:20px;
+top:10px;
 left: 15px;
 /* z-index: -5; */
 height: 50px;
@@ -615,12 +617,13 @@ display: flex;
 justify-content: center;
 align-items: center;
 /* border-radius: 50%; */
-font-size: 30px;
+font-size: 32px;
 font-weight: 700;
+
 }
 .setBtn:hover{
 	transform: scale(1.1);
-  background-color: var(--editBtnHover);
+  /* background-color: var(--editBtnHover); */
 }
 .settings.hidden{
 top: -300px;

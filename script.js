@@ -8,6 +8,7 @@ const setBtn = document.querySelector(".setBtn")
 const inputs = document.querySelector(".inputs");
 const settings = document.querySelector(".settings");
 const mainScreen = document.querySelector(".wraper");
+const dashboard = document.querySelector(".dashboard");
 const inputName = document.querySelector(".inputName");
 const inputAmnt = document.querySelector(".inputAmnt");
 const checkoutBtn = document.querySelector(".checkoutBtn");
@@ -52,23 +53,41 @@ expandLessBtn.addEventListener ("click", () => {
   expandMoreBtn.style.display = "flex";
 });
 
-expandMoreBtn.addEventListener ("click", () => {
-  let dashboard = document.querySelector(".dashboard");
-  dashboard.classList.add("expanded");
-  let sectionToHide = document.querySelector(".sectionToHide");
-  sectionToHide.classList.remove("blockDisplay");
-  let expandMoreBtn = document.querySelector(".expandMoreBtn");
-  expandMoreBtn.style.display = "none";
-    setTimeout(function () {
-    let sectionToHide = document.querySelector(".sectionToHide");
-    sectionToHide.classList.remove("hiddenVisually");
+
+let dashboardExpanded = false;
+
+dashboard.addEventListener ("click", () => {
+
+
+if (dashboardExpanded == false){
+console.log(dashboardExpanded);
+  dashboard.style.height = "390px"
+  dashboardExpanded = true;
+  return;
+};
+if (dashboardExpanded == true){
+  console.log(dashboardExpanded);
+  dashboard.style.height = "215px"
+  dashboardExpanded = false;
+  return;
+};
+
+  // let dashboard = document.querySelector(".dashboard");
+  // dashboard.classList.add("expanded");
+  // let sectionToHide = document.querySelector(".sectionToHide");
+  // sectionToHide.classList.remove("blockDisplay");
+  // let expandMoreBtn = document.querySelector(".expandMoreBtn");
+  // expandMoreBtn.style.display = "none";
+  //   setTimeout(function () {
+  //   let sectionToHide = document.querySelector(".sectionToHide");
+  //   sectionToHide.classList.remove("hiddenVisually");
       
-      sectionToHide.classList.add("expanded");
-      // expandMoreBtn.classList.add("hidden");
-      // expandLessBtn.classList.remove("hidden");
-      let expandLessBtn = document.querySelector(".expandLessBtn");
-    expandLessBtn.style.display = "flex";
-    },0);
+  //     sectionToHide.classList.add("expanded");
+  //     // expandMoreBtn.classList.add("hidden");
+  //     // expandLessBtn.classList.remove("hidden");
+  //     let expandLessBtn = document.querySelector(".expandLessBtn");
+  //   expandLessBtn.style.display = "flex";
+  //   },0);
   
  
 });
