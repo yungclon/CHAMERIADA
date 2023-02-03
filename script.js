@@ -68,7 +68,7 @@ expandMoreBtn.addEventListener ("click", () => {
       // expandLessBtn.classList.remove("hidden");
       let expandLessBtn = document.querySelector(".expandLessBtn");
     expandLessBtn.style.display = "flex";
-    },100);
+    },0);
   
  
 });
@@ -174,7 +174,7 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   newTile.addEventListener("click", () => {
     if (clicked == false){
       newTile.classList.add("active");
-      newTile.style.marginBottom= "70px";
+      newTile.style.marginBottom= "80px";
       clicked = true;
       console.log(clicked);
       return;
@@ -222,6 +222,16 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   checkoutBtn.appendChild(checkoutBtnIcon);
 
   checkoutBtn.addEventListener("click", () =>{
+   
+    
+    // newTile.classList.remove (".active");
+    // setTimeout (function (){
+    //   checkoutBtn.style.display = "none";
+    //   editButton.style.display = "none";
+    //   tileControlsWraper.style.justifyContent = "center";
+    //   clicked = false;
+    // },500);
+    
     let tempParent  = checkoutBtn.parentElement;
     let parentDiv = tempParent.parentElement;
     let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
@@ -236,6 +246,8 @@ const listCreatorExpense = (expenseName, expenseValue) => {
     paidCheck = true;
     
   });
+
+  
   tileControlsWraper.appendChild(editButton);
   tileControlsWraper.appendChild(deleteButton);
   tileControlsWraper.appendChild(checkoutBtn);

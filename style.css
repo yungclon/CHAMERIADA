@@ -7,7 +7,8 @@
 
 
   /* COLORS */
-  --background: #1c2130;
+  /* --background: #1c2130; */
+  --background: #444444;
   --tile: #4eb19f;
   --dashboard: #eadebd;
   --dashboardNameText: #8c8571;
@@ -89,6 +90,7 @@ grid-template-columns: 300px 20px auto; */
 }
 .list{
 grid-column: 3;
+
 }
 .tile.left{
 
@@ -114,6 +116,7 @@ grid-template-rows: 40% 60%;
 margin-bottom: 20px;
 transition: all 0.2s linear 0.5s;
 box-shadow: var(--shadow);
+z-index: 3;
 }
 .tile:hover{
 cursor: pointer;
@@ -121,16 +124,16 @@ cursor: pointer;
 transition: all 0.2s linear;
 }
 .tile.active .tileControlsWraper{
-top:130px;
+transform: translateY(70px);
 transition: all 0.2s linear;
-z-index: 1;
 
 } 
 .tileControlsWraper{
+z-index: 4;
 transition: all 0.2s linear;
-z-index: -5;
+
 position: absolute;
-top: 70px;
+top: 65px;
 display: flex;
 justify-self: center;
 justify-content: space-between;
@@ -455,12 +458,13 @@ background-color: var(--dashboard);
 color: beige;
 width: 100%;
 width: 100vw;
-height: 250px;
+height: 270px;
 padding: 20px;
+padding-top: 30px;
 border-radius: 20px 20px 0 0;
 /* GRID */
 display: grid;
-grid-template-rows: 35px 20px 50px 20px 70px ;
+grid-template-rows: 40px 25px 50px 25px 70px ;
 }
 .inputName{
 justify-self: center;
@@ -572,6 +576,26 @@ font-weight: 500;
 .addBtn:active{
 	transform: scale(1);
 }
+.topBar{
+/* background-color: var(--greyBtn); */
+position: absolute;
+height: 70px;
+width: 100%;
+display: flex;
+align-content: center;
+justify-content: center;
+top: 0;
+
+}
+.logo{
+width: 150px;
+height: auto;
+color: #db6969;
+fill: #cc4848;
+margin: auto;
+
+
+}
 
 .setBtn.hidden{
 
@@ -579,19 +603,19 @@ top:-40px;
 transition: all 0.2s linear;
 }
 .setBtn{
-box-shadow: var(--shadow);
-background-color: var(--greyBtn);
+/* box-shadow: var(--shadow); */
+/* background-color: var(--greyBtn); */
 position: absolute;
-top:25px;
-left: 25px;
-z-index: -5;
-height: 60px;
-width: 60px;
+top:20px;
+left: 15px;
+/* z-index: -5; */
+height: 50px;
+width: 50px;
 display: flex;
 justify-content: center;
 align-items: center;
-border-radius: 50%;
-font-size: 28px;
+/* border-radius: 50%; */
+font-size: 30px;
 font-weight: 700;
 }
 .setBtn:hover{
@@ -864,6 +888,11 @@ align-items: center;
 border-radius: 50%;
 font-size: 40px;
 font-weight: 500;
+}
+.logo{
+width: 150px;
+height: auto;
+}
 }
   
 
