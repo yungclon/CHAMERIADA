@@ -61,16 +61,14 @@ dashboard.addEventListener ("click", () => {
 
 
 if (dashboardExpanded == false){
-console.log(dashboardExpanded);
   dashboardExpander.classList.add("active");
-  dashboard.style.marginBottom = "220px"
+  list.classList.add("down");
   dashboardExpanded = true;
   return;
 };
 if (dashboardExpanded == true){
-  console.log(dashboardExpanded);
   dashboardExpander.classList.remove("active");
-  dashboard.style.marginBottom = "40px"
+  list.classList.remove("down");
   dashboardExpanded = false;
   return;
 };

@@ -82,6 +82,7 @@ transition-duration: 0.5s;
 
 }
 .wraper{
+margin-top: -20px;
 z-index: 1;
 transition-duration: 1s;
 opacity: 100%;
@@ -90,6 +91,12 @@ grid-template-columns: 300px 20px auto; */
 }
 .list{
 grid-column: 3;
+transition: all 0.2s linear;
+
+}
+.list.down{
+transform: translateY(180px);
+transition: all 0.2s linear;
 
 }
 .tile.left{
@@ -288,22 +295,14 @@ z-index: -2;
 padding: 20px;
 /* opacity: 50%; */
 box-shadow: var(--shadow);
+pointer-events: none
 
 }
 .dashboardExpander.active{
 transform: translateY(180px);
 transition: all 0.2s linear;
 }
-.hidder{
-position: absolute;
-width: 300px;
-background-color: var(--background);
-/* background-color: var(--checkoutBtnHover); */
-z-index: -1;
-height: 60px;
-top:-25px;
-left: 0;
-}
+
 .dashboard{
 
 position: relative;
@@ -479,7 +478,18 @@ font-size: 3em;
 grid-column:1 ;
 grid-row: 6;
 }
-
+.hidder{
+ pointer-events: none;
+position: absolute;
+width:340px;
+background-color: var(--background);
+/* background-color: var(--checkoutBtnHover); */
+z-index: -1;
+height: 80px;
+top:-40px;
+left: -20px;
+box-shadow: none;
+}
 
 .inputs.hidden{
 bottom:-350px;
@@ -623,6 +633,7 @@ display: flex;
 align-content: center;
 justify-content: center;
 top: 0;
+z-index: 2;
 
 }
 .logo{
@@ -637,8 +648,8 @@ margin: auto;
 
 .setBtn.hidden{
 
-top:-40px;
-transition: all 0.2s linear;
+/* top:-40px;
+transition: all 0.2s linear; */
 }
 .setBtn{
 /* box-shadow: var(--shadow); */
@@ -663,15 +674,15 @@ font-weight: 700;
   /* background-color: var(--editBtnHover); */
 }
 .settings.hidden{
-top: -300px;
-z-index: 2;
+transform: translateY(-300px);
+transition: all 0.2s linear;
 }
 
 .settings{
-z-index: 2;
+z-index: 3;
 position: absolute;
-transition-duration: 0.5s;
-top: 0px;
+transition: all 0.2s linear;
+top:0;
 left:0;
 right:0;
 margin: auto;
@@ -791,6 +802,7 @@ color:-var(--greyBtn) ;
   overflow: hidden;
   }
   .wraper{
+ 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
