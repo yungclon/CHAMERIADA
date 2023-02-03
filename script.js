@@ -61,13 +61,13 @@ dashboard.addEventListener ("click", () => {
 
 if (dashboardExpanded == false){
 console.log(dashboardExpanded);
-  dashboard.style.height = "390px"
+  dashboard.classList.add("expanded");
   dashboardExpanded = true;
   return;
 };
 if (dashboardExpanded == true){
   console.log(dashboardExpanded);
-  dashboard.style.height = "215px"
+  dashboard.classList.remove("expanded");
   dashboardExpanded = false;
   return;
 };
