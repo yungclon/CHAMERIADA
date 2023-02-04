@@ -105,6 +105,39 @@ left: -70px;
 transition-duration: 1s;
 
 }
+
+.tile:hover{
+cursor: pointer;
+
+transition: all 0.2s linear;
+}
+.tileControlsWraper.active {
+/* transform: translateX(190px);
+transition: all 0.2s linear;
+z-index: -1; */
+
+} 
+.tileControlsWraper{
+/* transform: translateZ(-1px); */
+z-index: 0;
+transition: all 0.2s linear;
+position: absolute;
+top: 0px;
+right:80px;
+display: flex;
+flex-direction: column;
+justify-self: center;
+justify-content: space-around;
+/* width:160px; */
+height: 120px;
+}
+.tileWraper{
+position: relative;
+width: 300px;
+height: 120px;
+background-color: blueviolet;
+margin-bottom: 20px;
+}
 .tile{
 left:0px;
 /* transform: translateZ(1px); */
@@ -121,35 +154,15 @@ border-radius: 20px;
 display: grid;
 grid-template-columns: auto 40px;
 grid-template-rows: 40% 60%;
-margin-bottom: 20px;
+
 transition: all 0.2s linear 0.5s;
 box-shadow: var(--shadow);
-/* z-index: 1; */
+z-index: 1;
+
 }
 .tile.active{
-transform: translateX(-150px);
-}
-.tile:hover{
-cursor: pointer;
+transform: translateX(-137px);
 
-transition: all 0.2s linear;
-}
-.tileControlsWraper.active {
-transform: translateX(200px);
-transition: all 0.2s linear;
-z-index: -1;
-
-} 
-.tileControlsWraper{
-/* transform: translateZ(-1px); */
-z-index: -1;
-transition: all 0.2s linear;
-position: absolute;
-top: 65px;
-display: flex;
-justify-self: center;
-justify-content: space-between;
-width:160px;
 }
 /* .devider{
 background-color: #a03ff0;
@@ -242,8 +255,10 @@ background-color: var(--greyBtn);
 justify-content: center;
 align-items: center;
 border-radius: 50%;
-height: 45px;
-width: 45px;
+height: 60px;
+width: 60px;
+position: absolute;
+left: 54px;
 }
 .checkoutBtn:hover{
 transform: scale(1.1);

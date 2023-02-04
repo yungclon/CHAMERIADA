@@ -195,7 +195,7 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   newTile.innerHTML = `<div class="name expense">${expenseName}</div><div class="amount expense">${expenseValue}</div> <div class="tilePLN expense">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
   tileControlsWraper.classList.add("tileControlsWraper")
-  newTile.appendChild(tileControlsWraper);
+  
   let editButton = document.createElement("div");
   editButton.classList.add("editBtn");
   let editButtonIcon = document.createElement("span");
@@ -251,20 +251,22 @@ const listCreatorExpense = (expenseName, expenseValue) => {
     paidCheck = true;
     
   });
-  let devider = document.createElement("div");
-  devider.classList.add("devider");
-  newTile.appendChild(devider);
+  let tileWraper = document.createElement("div");
+  tileWraper.classList.add("tileWraper");
+  
 
   tileControlsWraper.appendChild(editButton);
   tileControlsWraper.appendChild(deleteButton);
   tileControlsWraper.appendChild(checkoutBtn);
-  document.querySelector(".list").appendChild(newTile);
+  document.querySelector(".list").appendChild(tileWraper);
+  tileWraper.appendChild(newTile);
+  tileWraper.appendChild(tileControlsWraper);
 	newTile.style.backgroundColor = "var(--tile)";
   newTile.addEventListener("click", () => {
     if (clicked == false){
+    newTile.classList.add("active");
       tileControlsWraper.classList.add("active");
-      newTile.classList.add("active");
-      newTile.style.marginBottom= "80px";
+     
       clicked = true;
       console.log(clicked);
       return;
@@ -272,7 +274,6 @@ const listCreatorExpense = (expenseName, expenseValue) => {
     if (clicked == true){
       tileControlsWraper.classList.remove("active");
       newTile.classList.remove("active");
-      newTile.style.marginBottom= "20px";
       clicked = false;
       console.log(clicked);
       return;
