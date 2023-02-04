@@ -814,7 +814,6 @@ border-radius:0 0 20px 20px;
 display: grid;
 /* grid-template-columns: auto 80px; */
 grid-template-rows: 20px 20px 50px;
-columns: 80% 20%;
 box-shadow: var(--shadow);
 
 }
@@ -822,41 +821,33 @@ box-shadow: var(--shadow);
 background-color: var(--debtsTile);
 transition: all 0.3s linear;
 }
+.setInputWraper{
+position: relative;
+justify-self: center;
+grid-row: 3;
+width: 310px;
+}
 .setInput{
 transition: all 0.3s linear;
 caret-color: var(--tile);
 color: var(--tile);
 font-size: 3em;
 /* font-weight: 400; */
-width: 260px;
 padding-left: 10px;
-grid-row: 3;
+width: 260px;
 border-radius: 10px;
 border: none;
 outline: none;
 background-color: var(--expensesTileName);
 display: flex;
 text-align: end;
-padding-right: 8px;
-padding-left: 8px;
+padding-right: 59px;
+padding-left: 8;
 }
 .setInput::placeholder{
 color: var(--tile);
 }
 
-.setButtons{
-grid-column: 3;
-grid-row-start: 2;
-grid-row-end:3;
-	color: black;
-	border-radius: 15px;
-	/* grid-column: 2; */
-	display: flex;
-  flex-direction: column;
-	justify-content: space-around;
-	align-items: center;
-
-} 
 .SetConfirmBtn:active{
 	transform: scale(1);
 }
@@ -867,8 +858,11 @@ grid-row-end:3;
 	transform: scale(1);
 }
 .SetConfirmBtn{
-margin-right: 10px;
-background-color: rgb(92, 189, 113);
+background-color: var(--expensesTileAmount);
+color: var(--tile);
+position: absolute;
+right: 0px;
+top:5px;
 height: 40px;
 width: 40px;
 display: flex;
@@ -877,7 +871,7 @@ align-items: center;
 border-radius: 25px;
 font-size: 30px;
 font-weight: 700;
-box-shadow: 0px 0px 20px 0px rgba(66, 68, 90, 1);
+/* box-shadow: 0px 0px 20px 0px rgba(66, 68, 90, 1); */
 }
 .SetCancelBtn:hover{
 	transform: scale(1.1);
@@ -900,19 +894,16 @@ box-shadow: 0px 0px 20px 0px rgba(66, 68, 90, 1);
 .salaryText{
 font-size: 1.5em;
 font-weight: 500;
-color: rgb(97, 0, 97);
+color: var(--expensesTileAmount);
 grid-row: 1;
 }
 .setPLN{
-margin-left: 5px;
-grid-column: 2;
-grid-row: 3;
-align-self: end;
-position: relative;
-bottom: 12px;
+position: absolute;
+bottom: 8px;
+right: 60px;
 font-size: 1.5em;
 font-weight: 500;
-color: var(--expensesTileAmount);
+color: var(--tile);
 }
 @media screen and (min-width: 670px){
 
