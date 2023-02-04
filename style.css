@@ -539,9 +539,13 @@ top:-40px;
 left: -20px;
 box-shadow: none;
 }
-.inputs.error{
-background-color: #cc4848;
-transition: all 0.2s linear;
+.inputName.error{
+background-color: var(--debtsTile);
+transition: all 0.3s linear;
+}
+.inputAmnt.error{
+background-color: var(--debtsTile);
+transition: all 0.3s linear;
 }
 .inputs.hidden{
 transform: translateY(350px);
@@ -571,7 +575,6 @@ grid-template-rows: 40px 25px 55px 25px 70px ;
 cursor: pointer;
 }
 .inputsTouchpad{
-
 position: absolute;
 z-index: 8;
 width: 100%;
@@ -581,7 +584,18 @@ height: 100vw;
 /* background-color: #db6969;
 opacity: 60%; */
 }
+.settingsTouchpad{
+position: absolute;
+z-index: 6;
+width: 100%;
+width: 100vw;
+height: 500px;
+background-color: #db6969;
+opacity: 30%;
+top:140px
+}
 .inputName{
+transition: all 0.3s linear ;
 caret-color: var(--dashboard);
 color: var(--dashboard);
 justify-self: center;
@@ -603,6 +617,7 @@ color: var(--dashboard);
 color: var(--dashboard);
 }
 .inputAmnt{
+transition: all 0.3s linear ;
 justify-self: center;
 background-color: var(--dashboardNameText);
 color: var(--dashboard);
@@ -779,7 +794,7 @@ transition: all 0.3s linear;
 }
 
 .settings{
-z-index: 3;
+z-index: 7;
 position: absolute;
 transition: all 0.3s linear;
 top:0;
@@ -800,7 +815,12 @@ columns: 80% 20%;
 box-shadow: var(--shadow);
 
 }
+.setInput.error{
+background-color: var(--debtsTile);
+transition: all 0.3s linear;
+}
 .setInput{
+transition: all 0.3s linear;
 caret-color: var(--tile);
 color: var(--tile);
 font-size: 3em;

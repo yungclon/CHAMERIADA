@@ -115,6 +115,16 @@ function showSettings() {
 	addBtn.classList.add("hidden");
 	setBtn.classList.add("hidden");
 	mainScreen.classList.add("hidden");
+  let settingsTouchpad = document.createElement("div");
+  settingsTouchpad.classList.add("settingsTouchpad");
+   setTimeout(function () {
+   body.appendChild(settingsTouchpad);
+   },300)
+  
+  settingsTouchpad.addEventListener("click", () => {
+    setToMainScreen();
+    settingsTouchpad.remove();
+  });
 
 }
 function setToMainScreen() {
@@ -130,18 +140,20 @@ function inputToMainScreen() {
 	mainScreen.classList.remove("hidden");
 }
 function setBalance(){
-	// NAVIGATION
-	settings.classList.add("hidden");
-	addBtn.classList.remove("hidden");
-	setBtn.classList.remove("hidden");
-	mainScreen.classList.remove("hidden");
-	// LOGIC
-	balance = parseFloat(setInput.value);
   if (setInput.value == "" || setInput.value < 0) {
-  console.log("working");
+     setInput.classList.add("error");
+    setTimeout(function () {
+     setInput.classList.remove("error");
+    return;
+    },300);
    return;
   } 
   else {
+  balance = parseFloat(setInput.value);
+  settings.classList.add("hidden");
+	addBtn.classList.remove("hidden");
+	setBtn.classList.remove("hidden");
+	mainScreen.classList.remove("hidden");
 	balanceAmnt.innerHTML = balance - expensesAmnt.innerText;
   plannedBalanceAmnt.innerHTML = balance - expensesAmnt.innerText;
   }
@@ -333,11 +345,13 @@ expenseBtn.addEventListener ("click", () => {
   let newExpense = parseFloat(inputAmnt.value);
   
   if (inputName.value == "" || inputAmnt.value == ""){
-    inputs.classList.add("error");
+    inputName.classList.add("error");
+    inputAmnt.classList.add("error");
     setTimeout(function () {
-     inputs.classList.remove("error");
+     inputName.classList.remove("error");
+     inputAmnt.classList.remove("error");
     return;
-    },200);
+    },300);
    
   }
   else{
@@ -462,7 +476,3 @@ let newDebt = parseFloat(inputAmnt.value);
 addBtn.addEventListener ("click", showInput);
 setBtn.addEventListener ("click", showSettings);
 SetConfirmBtn.addEventListener ("click", setBalance);
-SetCancelBtn.addEventListener ("click", setToMainScreen);
-
-
-// savingBtn.addEventListener ("click", inputToMainScreen);
