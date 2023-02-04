@@ -126,7 +126,7 @@ function setBalance(){
 	setBtn.classList.remove("hidden");
 	mainScreen.classList.remove("hidden");
 	// LOGIC
-	balance = parseInt(setInput.value);
+	balance = parseFloat(setInput.value);
 	balanceAmnt.innerHTML = balance - expensesAmnt.innerText;
   plannedBalanceAmnt.innerHTML = balance - expensesAmnt.innerText;
 

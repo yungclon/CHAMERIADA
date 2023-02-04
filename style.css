@@ -652,7 +652,7 @@ display: none;
 .addBtn{
 box-shadow: var(--shadow);
 background-color: var(--greyBtn);
-position: absolute;
+position: fixed;
 bottom: 25px;
 right: 25px;
 z-index: 6;
@@ -734,7 +734,7 @@ top:0;
 left:0;
 right:0;
 margin: auto;
-background-color: var(--dashboard);
+background-color: var(--tile);
 width: 100vh;
 width: 100%;
 height: 144px;
@@ -748,8 +748,8 @@ box-shadow: var(--shadow);
 
 }
 .setInput{
-caret-color: var(--dashboardAmountText);
-color: var(--dashboardAmountText);
+caret-color: var(--expensesTileName);
+color: var(--expensesTileName);
 font-size: 25px;
 font-weight: 500;
 width: 260px;
@@ -758,13 +758,16 @@ grid-row: 3;
 border-radius: 10px;
 border: solid;
 border-width: 3px;
-border-color: var(--dashboardAmountText);
+border-color: var(--expensesTileName);
 outline: none;
-background-color: var(--dashboard);
+background-color: var(--tile);
 display: flex;
 text-align: end;
 padding-right: 8px;
 padding-left: 8px;
+}
+.setInput::placeholder{
+color: var(--expensesTileName);
 }
 
 .setButtons{
