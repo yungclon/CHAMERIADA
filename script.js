@@ -328,22 +328,32 @@ const listCreatorExpense = (expenseName, expenseValue) => {
 
 expenseBtn.addEventListener ("click", () => {
   category = "expense";
-  inputToMainScreen();
-  let inputsTouchpad = document.querySelector(".inputsTouchpad");
-  inputsTouchpad.remove();
+  
+  
   let newExpense = parseFloat(inputAmnt.value);
   
+  if (inputName.value == "" || inputAmnt.value == ""){
+    inputs.classList.add("error");
+    setTimeout(function () {
+     inputs.classList.remove("error");
+    return;
+    },200);
+   
+  }
+  else{
+  let inputsTouchpad = document.querySelector(".inputsTouchpad");
+  inputsTouchpad.remove();
+  inputToMainScreen();
   //Total expense (existing + new)
   let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
   const planedBalance = parseFloat(plannedBalanceAmnt.innerText) - sumExpense;
   plannedBalanceAmnt.innerText = planedBalance;
-
   listCreatorExpense(inputName.value, inputAmnt.value);
   
   //Empty inputs
   inputName.value = "";
   inputAmnt.value = "";
-  
+  }
 });
 
 const listCreatorDebt = (expenseName, expenseValue) => {

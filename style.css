@@ -539,7 +539,10 @@ top:-40px;
 left: -20px;
 box-shadow: none;
 }
-
+.inputs.error{
+background-color: #cc4848;
+transition: all 0.2s linear;
+}
 .inputs.hidden{
 transform: translateY(350px);
 /* bottom:-350px; */
