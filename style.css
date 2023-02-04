@@ -99,12 +99,12 @@ transform: translateY(180px);
 transition: all 0.2s linear;
 
 }
-.tile.left{
+/* .tile.left{
 
 left: -70px;
 transition-duration: 1s;
 
-}
+} */
 
 .tile:hover{
 cursor: pointer;
@@ -123,7 +123,7 @@ z-index: 0;
 transition: all 0.2s linear;
 position: absolute;
 top: 0px;
-left:80px;
+left:10px;
 display: flex;
 flex-direction: column;
 justify-self: center;
@@ -157,11 +157,32 @@ grid-template-rows: 40% 60%;
 transition: all 0.2s linear 0.5s;
 box-shadow: var(--shadow);
 z-index: 1;
+/* opacity: 30%; */
 
 }
-.tile.active{
-transform: translateX(137px);
-
+.leftTouchpad{
+position: absolute;
+top:0;
+left:0;
+height: 120px;
+width: 150px;
+/* background-color: #7bb659;
+opacity: 30%; */
+}
+.rightTouchpad{
+position: absolute;
+top:0;
+right:0;
+height: 120px;
+width: 150px;
+/* background-color: #ff0000;
+opacity: 30%; */
+}
+.tile.right{
+transform: translateX(70px);
+}
+.tile.left{
+transform: translateX(-85px);
 }
 /* .devider{
 background-color: #a03ff0;
@@ -257,7 +278,7 @@ border-radius: 50%;
 height: 60px;
 width: 60px;
 position: absolute;
-right: 54px;
+left: 220px;
 }
 .checkoutBtn:hover{
 transform: scale(1.1);

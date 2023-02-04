@@ -262,18 +262,48 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   tileWraper.appendChild(newTile);
   tileWraper.appendChild(tileControlsWraper);
 	newTile.style.backgroundColor = "var(--tile)";
-  newTile.addEventListener("click", () => {
+  let leftTouchpad = document.createElement("div");
+  leftTouchpad.classList.add("leftTouchpad");
+  let rightTouchpad = document.createElement("div");
+  rightTouchpad.classList.add("rightTouchpad");
+  newTile.appendChild(leftTouchpad);
+   newTile.appendChild(rightTouchpad);
+  rightTouchpad.addEventListener("click", () => {
     if (clicked == false){
-    newTile.classList.add("active");
+    newTile.classList.add("left");
       tileControlsWraper.classList.add("active");
-     
+      rightTouchpad.style.width = "300px"
+      leftTouchpad.style.width = "0px"
       clicked = true;
       console.log(clicked);
       return;
     }
     if (clicked == true){
-      tileControlsWraper.classList.remove("active");
-      newTile.classList.remove("active");
+      tileControlsWraper.classList.remove("left");
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "150px"
+      rightTouchpad.style.width = "150px"
+      
+      clicked = false;
+      console.log(clicked);
+      return;
+    }
+  });
+  leftTouchpad.addEventListener("click", () => {
+    if (clicked == false){
+    newTile.classList.add("right");
+      tileControlsWraper.classList.add("active");
+       rightTouchpad.style.width = "0px"
+      leftTouchpad.style.width = "300px"
+      clicked = true;
+      console.log(clicked);
+      return;
+    }
+    if (clicked == true){
+      tileControlsWraper.classList.remove("left");
+      newTile.classList.remove("right");
+      leftTouchpad.style.width = "150px"
+      rightTouchpad.style.width = "150px"
       clicked = false;
       console.log(clicked);
       return;
