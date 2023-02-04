@@ -15,7 +15,7 @@ const checkoutBtn = document.querySelector(".checkoutBtn");
 const expandMoreBtn = document.querySelector(".expandMoreBtn");
 const expandLessBtn = document.querySelector(".expandLessBtn");
 let dashboardExpander = document.querySelector(".dashboardExpander");
-
+let topBar = document.querySelector(".topBar");
 
 const list = document.querySelector(".list");
 const balanceAmnt = document.querySelector(".balanceAmnt");
@@ -98,6 +98,7 @@ function showInput() {
 	addBtn.classList.add("hidden");
 	setBtn.classList.add("hidden");
 	mainScreen.classList.add("hidden");
+  topBar.classList.add("hidden");
   let inputsTouchpad = document.createElement("div");
   inputsTouchpad.classList.add("inputsTouchpad");
    setTimeout(function () {
@@ -115,6 +116,7 @@ function showSettings() {
 	addBtn.classList.add("hidden");
 	setBtn.classList.add("hidden");
 	mainScreen.classList.add("hidden");
+  
   let settingsTouchpad = document.createElement("div");
   settingsTouchpad.classList.add("settingsTouchpad");
    setTimeout(function () {
@@ -138,6 +140,7 @@ function inputToMainScreen() {
 	addBtn.classList.remove("hidden");
 	setBtn.classList.remove("hidden");
 	mainScreen.classList.remove("hidden");
+  topBar.classList.remove("hidden");
 }
 function setBalance(){
   if (setInput.value == "" || setInput.value < 0) {
