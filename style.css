@@ -108,8 +108,6 @@ transition-duration: 1s;
 
 .tile:hover{
 cursor: pointer;
-
-transition: all 0.2s linear;
 }
 .tileControlsWraper.active {
 /* transform: translateX(190px);
@@ -139,8 +137,6 @@ margin-bottom: 20px;
 }
 .tile{
 left:0px;
-/* transform: translateZ(1px); */
-transition-duration: 1s;
 position: relative;
 background-color: var(--tile);
 color: var(--tileAmount);
@@ -154,7 +150,7 @@ display: grid;
 grid-template-columns: auto 40px;
 grid-template-rows: 40% 60%;
 
-transition: all 0.2s linear 0.5s;
+transition: all 0.1s linear;
 box-shadow: var(--shadow);
 z-index: 1;
 /* opacity: 30%; */
@@ -165,24 +161,26 @@ position: absolute;
 top:0;
 left:0;
 height: 120px;
-width: 150px;
+width: 120px;
 /* background-color: #7bb659;
 opacity: 30%; */
-}
+} 
 .rightTouchpad{
 position: absolute;
 top:0;
 right:0;
 height: 120px;
-width: 150px;
+width: 120px;
 /* background-color: #ff0000;
 opacity: 30%; */
 }
 .tile.right{
 transform: translateX(70px);
+transition: all 0.1s linear;
 }
 .tile.left{
 transform: translateX(-85px);
+transition: all 0.1s linear;
 }
 /* .devider{
 background-color: #a03ff0;

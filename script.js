@@ -281,8 +281,8 @@ const listCreatorExpense = (expenseName, expenseValue) => {
     if (clicked == true){
       tileControlsWraper.classList.remove("left");
       newTile.classList.remove("left");
-      leftTouchpad.style.width = "150px"
-      rightTouchpad.style.width = "150px"
+      leftTouchpad.style.width = "120px"
+      rightTouchpad.style.width = "120px"
       
       clicked = false;
       console.log(clicked);
@@ -302,8 +302,8 @@ const listCreatorExpense = (expenseName, expenseValue) => {
     if (clicked == true){
       tileControlsWraper.classList.remove("left");
       newTile.classList.remove("right");
-      leftTouchpad.style.width = "150px"
-      rightTouchpad.style.width = "150px"
+      leftTouchpad.style.width = "120px"
+      rightTouchpad.style.width = "120px"
       clicked = false;
       console.log(clicked);
       return;
