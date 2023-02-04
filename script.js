@@ -324,6 +324,8 @@ const listCreatorExpense = (expenseName, expenseValue) => {
 expenseBtn.addEventListener ("click", () => {
   category = "expense";
   inputToMainScreen();
+  let inputsTouchpad = document.querySelector(".inputsTouchpad");
+  inputsTouchpad.remove();
   let newExpense = parseFloat(inputAmnt.value);
   
   //Total expense (existing + new)

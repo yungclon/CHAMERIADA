@@ -540,7 +540,8 @@ box-shadow: none;
 }
 
 .inputs.hidden{
-bottom:-350px;
+transform: translateY(350px);
+/* bottom:-350px; */
 transition: all 0.3s linear ;
 z-index: 10;
 }
@@ -602,7 +603,7 @@ justify-self: center;
 background-color: var(--dashboardNameText);
 color: var(--dashboard);
 text-align: end;
-padding-right: 55px;
+padding-right: 58px;
 font-size: 3em;
 /* font-weight: 500; */
 width: 310px;
