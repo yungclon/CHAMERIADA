@@ -722,14 +722,14 @@ font-weight: 700;
   /* background-color: var(--editBtnHover); */
 }
 .settings.hidden{
-transform: translateY(-300px);
-transition: all 0.2s linear;
+transform: translateY(-200px);
+transition: all 0.3s linear;
 }
 
 .settings{
 z-index: 3;
 position: absolute;
-transition: all 0.2s linear;
+transition: all 0.3s linear;
 top:0;
 left:0;
 right:0;
