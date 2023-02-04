@@ -137,9 +137,14 @@ function setBalance(){
 	mainScreen.classList.remove("hidden");
 	// LOGIC
 	balance = parseFloat(setInput.value);
+  if (setInput.value == "" || setInput.value < 0) {
+  console.log("working");
+   return;
+  } 
+  else {
 	balanceAmnt.innerHTML = balance - expensesAmnt.innerText;
   plannedBalanceAmnt.innerHTML = balance - expensesAmnt.innerText;
-
+  }
 }
 
 const modifyExpenses = (element, edit = false, isPaid = false) => {
