@@ -562,6 +562,20 @@ display: grid;
 grid-template-rows: 40px 25px 55px 25px 70px ;
 /* grid-template-columns: auto 60px; */
 }
+.inputsTouchpad:hover{
+cursor: pointer;
+}
+.inputsTouchpad{
+
+position: absolute;
+z-index: 8;
+width: 100%;
+width: 100vw;
+height: 100%;
+height: 100vw;
+/* background-color: #db6969;
+opacity: 60%; */
+}
 .inputName{
 caret-color: var(--dashboard);
 color: var(--dashboard);
@@ -611,7 +625,7 @@ font-weight: 500;
 color: var(--dashboard);
 position: absolute;
 right: 10px;
-bottom: 10px;
+bottom: 8px;
 
 }
 
@@ -632,8 +646,9 @@ transform: scale(1);
 .expenseCat{
 box-shadow: var(--shadowLight);
 background-color: var(--tile);
-font-size: 17px;
-color:  beige;
+font-size: 20px;
+font-weight: 500;
+color:  var(--expensesTileAmount);
 width: 145px;
 height: 70px;
 border-radius: 15px;
@@ -648,7 +663,7 @@ transform: scale(1.05);
 transform: scale(1);
 }
 .savingCat{
-background-color: rgb(168, 93, 23);
+background-color:var(--debtsTile);
 font-size: 17px;
 color: beige;
 width: 87px;
@@ -666,9 +681,10 @@ transform: scale(1);
 }
 .debtCat{
 box-shadow: var(--shadowLight);
-background-color: rgb(105, 168, 23);
-font-size: 17px;
-color: beige;
+background-color:var(--debtsTile);
+font-size: 20px;
+font-weight: 500;
+color: var(--debtsTileAmount);
 width: 145px;
 height: 70px;
 border-radius: 15px;

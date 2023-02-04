@@ -92,12 +92,22 @@ if (dashboardExpanded == true){
   
  
 });
+let body = document.querySelector("body");
 function showInput() {
 	inputs.classList.remove("hidden");
 	addBtn.classList.add("hidden");
 	setBtn.classList.add("hidden");
 	mainScreen.classList.add("hidden");
- 
+  let inputsTouchpad = document.createElement("div");
+  inputsTouchpad.classList.add("inputsTouchpad");
+   setTimeout(function () {
+   body.appendChild(inputsTouchpad);
+   },300)
+  
+  inputsTouchpad.addEventListener("click", () => {
+    inputToMainScreen();
+    inputsTouchpad.remove();
+  });
 };
 
 function showSettings() {
