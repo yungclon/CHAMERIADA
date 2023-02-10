@@ -170,15 +170,42 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   checkoutBtnIcon.classList.add("btnIcon", "adjustCheckIcon", "material-symbols-rounded")
   checkoutBtnIcon.innerHTML =  `payments`;
   checkoutBtn.appendChild(checkoutBtnIcon);
+
   checkoutBtn.addEventListener("click", () =>{
-    let tempParent  = checkoutBtn.parentElement;
+  if (paidCheck == false) {
+    let tempParent = checkoutBtn.parentElement;
     let parentDiv = tempParent.parentElement;
     let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
     let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
     expensesAmnt.innerText = sumExpense;
     const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
     balanceAmnt.innerText = totalBalance;
+    parentDiv.style.opacity = "50%";
+    tileControlsWraper.classList.remove("left");
+    newTile.classList.remove("left");
+    leftTouchpad.style.width = "120px";
+    rightTouchpad.style.width = "120px";
     paidCheck = true;
+    return;
+  }
+    if (paidCheck == true) {
+        let tempParent = checkoutBtn.parentElement;
+        let parentDiv = tempParent.parentElement;
+        let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
+        let sumExpense = parseFloat(expensesAmnt.innerText) - newExpense;
+        expensesAmnt.innerText = sumExpense;
+        const totalBalance = parseFloat(balanceAmnt.innerText) + newExpense;
+        balanceAmnt.innerText = totalBalance;
+        parentDiv.style.opacity = "100%";
+        tileControlsWraper.classList.remove("left");
+        newTile.classList.remove("left");
+        leftTouchpad.style.width = "120px";
+        rightTouchpad.style.width = "120px";
+        clicked = false;
+        paidCheck = false;
+        return;
+      }
+
   });
   let tileWraper = document.createElement("div");
   tileWraper.classList.add("tileWraper");
@@ -300,24 +327,44 @@ const listCreatorDebt = (expenseName, expenseValue) => {
   checkoutBtnIcon.classList.add("btnIcon", "adjustCheckIcon", "material-symbols-rounded")
   checkoutBtnIcon.innerHTML =  `payments`;
   checkoutBtn.appendChild(checkoutBtnIcon);
+
   checkoutBtn.addEventListener("click", () =>{
-    let tempParent  = checkoutBtn.parentElement;
-    let parentDiv = tempParent.parentElement;
-    let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
-    let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
-    debtsAmnt.innerText = sumDebt;
-    const totalBalance = parseFloat(balanceAmnt.innerText) - newDebt;
-    balanceAmnt.innerText = totalBalance;
-    parentDiv.style.opacity = "50%";
-    tileControlsWraper.classList.remove("left");
-    newTile.classList.remove("left");
-    leftTouchpad.style.width = "120px";
-    rightTouchpad.style.width = "120px";
-    clicked = false;
+    if (paidCheck == false) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
+      debtsAmnt.innerText = sumDebt;
+      const totalBalance = parseFloat(balanceAmnt.innerText) - newDebt;
+      balanceAmnt.innerText = totalBalance;
+      parentDiv.style.opacity = "50%";
+      tileControlsWraper.classList.remove("left");
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      paidCheck = true;
+      return;
+    }
+    if (paidCheck == true) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumDebt = parseFloat(debtsAmnt.innerText) - newDebt;
+      debtsAmnt.innerText = sumDebt;
+      const totalBalance = parseFloat(balanceAmnt.innerText) + newDebt;
+      balanceAmnt.innerText = totalBalance;
+      parentDiv.style.opacity = "100%";
+      tileControlsWraper.classList.remove("left");
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      clicked = false;
+      paidCheck = false;
+      return;
+    }
 
 
-
-    paidCheck = true;
+  
   });
   let tileWraper = document.createElement("div");
   tileWraper.classList.add("tileWraper");
