@@ -104,10 +104,8 @@ transition: all 0.2s linear;
 
 }
 /* .tile.left{
-
 left: -70px;
 transition-duration: 1s;
-
 } */
 
 .tile:hover{
@@ -1012,7 +1010,6 @@ color: var(--tile);
   top:110px;
   transition: all 0.2s linear 0.5s;
   z-index: 1;
-
   }  */
   .tileControlsWraper{
   transition: all 0.2s linear 0.5s;
@@ -1042,6 +1039,7 @@ font-size: 28px;
 font-weight: 700;
 }
 .addBtn{
+
 box-shadow: var(--shadow);
 background-color: var(--greyBtn);
 position: absolute;
@@ -1070,4 +1068,3 @@ body{
   user-select: none; /* Standard syntax */
 
 } 
-

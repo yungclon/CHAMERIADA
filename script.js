@@ -16,83 +16,32 @@ const expandMoreBtn = document.querySelector(".expandMoreBtn");
 const expandLessBtn = document.querySelector(".expandLessBtn");
 let dashboardExpander = document.querySelector(".dashboardExpander");
 let topBar = document.querySelector(".topBar");
-
 const list = document.querySelector(".list");
 const balanceAmnt = document.querySelector(".balanceAmnt");
 const plannedBalanceAmnt = document.querySelector(".plannedBalanceAmnt");
 const debtsAmnt = document.querySelector(".debtsAmnt");
 const expensesAmnt = document.querySelector(".expensesAmnt");
 const setInput = document.querySelector(".setInput");
-
-// let plannedExpenses = 0;
-// let balance = 0.00;
 let debts = 0.00;
 let category = ""
-// let expenses = 0;
-inputName.addEventListener ("click", () => { window.scrollTo(0, document.body.scrollHeight);});
-inputAmnt.addEventListener ("click", () => { window.scrollTo(0, document.body.scrollHeight);});
-
-
-// NAVIGATION
-// expandLessBtn.addEventListener ("click", () => {
-  
-//   let sectionToHide = document.querySelector(".sectionToHide");
-//   sectionToHide.classList.add("hiddenVisually");
-//     setTimeout(function () {
-   
-//       let sectionToHide = document.querySelector(".sectionToHide");
-//       sectionToHide.classList.remove("expanded");
-//       sectionToHide.classList.add("blockDisplay");
-//       let dashboard = document.querySelector(".dashboard");
-//       dashboard.classList.remove("expanded");
-//       // expandLessBtn.classList.add("hidden");
-//       // expandMoreBtn.classList.remove("hidden");
-//   },100);
-//   let expandLessBtn = document.querySelector(".expandLessBtn");
-//   let expandMoreBtn = document.querySelector(".expandMoreBtn");
-//   expandLessBtn.style.display = "none";
-//   expandMoreBtn.style.display = "flex";
-// });
-
-
 let dashboardExpanded = false;
+let body = document.querySelector("body");
 
 dashboard.addEventListener ("click", () => {
-
-
-if (dashboardExpanded == false){
-  dashboardExpander.classList.add("active");
-  list.classList.add("down");
-  dashboardExpanded = true;
-  return;
-};
-if (dashboardExpanded == true){
-  dashboardExpander.classList.remove("active");
-  list.classList.remove("down");
-  dashboardExpanded = false;
-  return;
-};
-
-  // let dashboard = document.querySelector(".dashboard");
-  // dashboard.classList.add("expanded");
-  // let sectionToHide = document.querySelector(".sectionToHide");
-  // sectionToHide.classList.remove("blockDisplay");
-  // let expandMoreBtn = document.querySelector(".expandMoreBtn");
-  // expandMoreBtn.style.display = "none";
-  //   setTimeout(function () {
-  //   let sectionToHide = document.querySelector(".sectionToHide");
-  //   sectionToHide.classList.remove("hiddenVisually");
-      
-  //     sectionToHide.classList.add("expanded");
-  //     // expandMoreBtn.classList.add("hidden");
-  //     // expandLessBtn.classList.remove("hidden");
-  //     let expandLessBtn = document.querySelector(".expandLessBtn");
-  //   expandLessBtn.style.display = "flex";
-  //   },0);
-  
- 
+  if (dashboardExpanded == false){
+    dashboardExpander.classList.add("active");
+    list.classList.add("down");
+    dashboardExpanded = true;
+    return;
+  };
+  if (dashboardExpanded == true){
+    dashboardExpander.classList.remove("active");
+    list.classList.remove("down");
+    dashboardExpanded = false;
+    return;
+  };
 });
-let body = document.querySelector("body");
+
 function showInput() {
 	inputs.classList.remove("hidden");
 	addBtn.classList.add("hidden");
@@ -101,10 +50,9 @@ function showInput() {
   topBar.classList.add("hidden");
   let inputsTouchpad = document.createElement("div");
   inputsTouchpad.classList.add("inputsTouchpad");
-   setTimeout(function () {
-   body.appendChild(inputsTouchpad);
-   },300)
-  
+  setTimeout(function () {
+    body.appendChild(inputsTouchpad);
+  },300)
   inputsTouchpad.addEventListener("click", () => {
     inputToMainScreen();
     inputsTouchpad.remove();
@@ -116,25 +64,24 @@ function showSettings() {
 	addBtn.classList.add("hidden");
 	setBtn.classList.add("hidden");
 	mainScreen.classList.add("hidden");
-  
   let settingsTouchpad = document.createElement("div");
   settingsTouchpad.classList.add("settingsTouchpad");
-   setTimeout(function () {
-   body.appendChild(settingsTouchpad);
-   },300)
-  
+  setTimeout(function () {
+    body.appendChild(settingsTouchpad);
+  },300)
   settingsTouchpad.addEventListener("click", () => {
     setToMainScreen();
     settingsTouchpad.remove();
   });
-
 }
+
 function setToMainScreen() {
 	settings.classList.add("hidden");
 	addBtn.classList.remove("hidden");
 	setBtn.classList.remove("hidden");
 	mainScreen.classList.remove("hidden");
 }
+
 function inputToMainScreen() {
 	inputs.classList.add("hidden");
 	addBtn.classList.remove("hidden");
@@ -142,23 +89,24 @@ function inputToMainScreen() {
 	mainScreen.classList.remove("hidden");
   topBar.classList.remove("hidden");
 }
+
 function setBalance(){
   if (setInput.value == "" || setInput.value < 0) {
-     setInput.classList.add("error");
+    setInput.classList.add("error");
     setTimeout(function () {
-     setInput.classList.remove("error");
-    return;
+      setInput.classList.remove("error");
+      return;
     },300);
-   return;
+  return;
   } 
   else {
-  balance = parseFloat(setInput.value);
-  settings.classList.add("hidden");
-	addBtn.classList.remove("hidden");
-	setBtn.classList.remove("hidden");
-	mainScreen.classList.remove("hidden");
-	balanceAmnt.innerHTML = balance - expensesAmnt.innerText;
-  plannedBalanceAmnt.innerHTML = balance - expensesAmnt.innerText;
+    balance = parseFloat(setInput.value);
+    settings.classList.add("hidden");
+    addBtn.classList.remove("hidden");
+    setBtn.classList.remove("hidden");
+    mainScreen.classList.remove("hidden");
+    balanceAmnt.innerHTML = balance - expensesAmnt.innerText;
+    plannedBalanceAmnt.innerHTML = balance - expensesAmnt.innerText;
   }
 }
 
@@ -170,7 +118,7 @@ const modifyExpenses = (element, edit = false, isPaid = false) => {
   let parentDiv = tempParent.parentElement;
   let parentAmount = parentDiv.querySelector(".amount").innerText;
   if (edit) {
-	showInput();
+    showInput();
     let parentText = parentDiv.querySelector(".name").innerText;
     inputName.value = parentText;
     inputAmnt.value = parentAmount;
@@ -180,38 +128,9 @@ const modifyExpenses = (element, edit = false, isPaid = false) => {
     plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
     expensesAmnt.innerText = parseFloat(currentExpense) - parseFloat(parentAmount);
     parentDiv.remove();
-  }
-  else{
-  plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
-  parentDiv.remove();
-  }
-};
-
-const modifyDebts = (element, edit = false, isPaid = false) => {
-  let currentBalance = balanceAmnt.innerText;
-  let currentPlannedBalance= plannedBalanceAmnt.innerText;
-  let currentDebt = debtsAmnt.innerText;
-  let tempParent  = element.parentElement;
-  let parentDiv = tempParent.parentElement;
-  let parentAmount = parentDiv.querySelector(".amount").innerText;
-  if (edit) {
-	showInput();
-    let parentText = parentDiv.querySelector(".name").innerText;
-    inputName.value = parentText;
-    inputAmnt.value = parentAmount;
-  };
-  if (isPaid) {
-  
-    
-    balanceAmnt.innerText = parseFloat(currentBalance) + parseFloat(parentAmount);
+  }else{
     plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
-    debtsAmnt.innerText = parseFloat(debtsAmnt.innerText) - parseFloat(parentAmount);
-    
     parentDiv.remove();
-  }
-  else{
-  plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
-  parentDiv.remove();
   }
 };
 
@@ -221,17 +140,14 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   newTile.classList.add("tile");
   list.appendChild(newTile);
   let clicked = false;
-  
   newTile.innerHTML = `<div class="name expense">${expenseName}</div><div class="amount expense">${expenseValue}</div> <div class="tilePLN expense">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
-  tileControlsWraper.classList.add("tileControlsWraper")
-  
+  tileControlsWraper.classList.add("tileControlsWraper");
   let editButton = document.createElement("div");
   editButton.classList.add("editBtn");
   let editButtonIcon = document.createElement("span");
   editButtonIcon.innerHTML = `<span class="btnIcon adjustEditIcon material-symbols-rounded">edit_square</span>`;
   editButton.appendChild(editButtonIcon);
-
   editButton.addEventListener("click", () => {
     modifyExpenses(editButton, true);
   });
@@ -248,43 +164,24 @@ const listCreatorExpense = (expenseName, expenseValue) => {
       modifyExpenses(deleteButton);
       }
   });
-
   let checkoutBtn = document.createElement("div");
   checkoutBtn.classList.add("checkoutBtn");
   let checkoutBtnIcon = document.createElement("span");
   checkoutBtnIcon.classList.add("btnIcon", "adjustCheckIcon", "material-symbols-rounded")
   checkoutBtnIcon.innerHTML =  `payments`;
   checkoutBtn.appendChild(checkoutBtnIcon);
-
   checkoutBtn.addEventListener("click", () =>{
-   
-    
-    // newTile.classList.remove (".active");
-    // setTimeout (function (){
-    //   checkoutBtn.style.display = "none";
-    //   editButton.style.display = "none";
-    //   tileControlsWraper.style.justifyContent = "center";
-    //   clicked = false;
-    // },500);
-    
     let tempParent  = checkoutBtn.parentElement;
     let parentDiv = tempParent.parentElement;
     let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
-    parentDiv.style.background = "#346159";
-    tempParent.style.opacity = "50%";
-    //Total expense (existing + new)
     let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
     expensesAmnt.innerText = sumExpense;
-    //Total balance(budget - total expense)
     const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
     balanceAmnt.innerText = totalBalance;
     paidCheck = true;
-    
   });
   let tileWraper = document.createElement("div");
   tileWraper.classList.add("tileWraper");
-  
-
   tileControlsWraper.appendChild(editButton);
   tileControlsWraper.appendChild(deleteButton);
   tileControlsWraper.appendChild(checkoutBtn);
@@ -297,10 +194,10 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   let rightTouchpad = document.createElement("div");
   rightTouchpad.classList.add("rightTouchpad");
   newTile.appendChild(leftTouchpad);
-   newTile.appendChild(rightTouchpad);
+  newTile.appendChild(rightTouchpad);
   rightTouchpad.addEventListener("click", () => {
     if (clicked == false){
-    newTile.classList.add("left");
+      newTile.classList.add("left");
       tileControlsWraper.classList.add("active");
       rightTouchpad.style.width = "300px"
       leftTouchpad.style.width = "0px"
@@ -313,7 +210,6 @@ const listCreatorExpense = (expenseName, expenseValue) => {
       newTile.classList.remove("left");
       leftTouchpad.style.width = "120px"
       rightTouchpad.style.width = "120px"
-      
       clicked = false;
       console.log(clicked);
       return;
@@ -321,9 +217,9 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   });
   leftTouchpad.addEventListener("click", () => {
     if (clicked == false){
-    newTile.classList.add("right");
+      newTile.classList.add("right");
       tileControlsWraper.classList.add("active");
-       rightTouchpad.style.width = "0px"
+      rightTouchpad.style.width = "0px"
       leftTouchpad.style.width = "300px"
       clicked = true;
       console.log(clicked);
@@ -339,39 +235,33 @@ const listCreatorExpense = (expenseName, expenseValue) => {
       return;
     }
   });
-  };
+};
 
-expenseBtn.addEventListener ("click", () => {
-  category = "expense";
-  
-  
-  let newExpense = parseFloat(inputAmnt.value);
-  
-  if (inputName.value == "" || inputAmnt.value == ""){
-    inputName.classList.add("error");
-    inputAmnt.classList.add("error");
-    setTimeout(function () {
-     inputName.classList.remove("error");
-     inputAmnt.classList.remove("error");
-    return;
-    },300);
-   
+
+
+const modifyDebts = (element, edit = false, isPaid = false) => {
+  let currentBalance = balanceAmnt.innerText;
+  let currentPlannedBalance = plannedBalanceAmnt.innerText;
+  let currentDebt = debtsAmnt.innerText;
+  let tempParent = element.parentElement;
+  let parentDiv = tempParent.parentElement;
+  let parentAmount = parentDiv.querySelector(".amount").innerText;
+  if (edit) {
+    showInput();
+    let parentText = parentDiv.querySelector(".name").innerText;
+    inputName.value = parentText;
+    inputAmnt.value = parentAmount;
   }
-  else{
-  let inputsTouchpad = document.querySelector(".inputsTouchpad");
-  inputsTouchpad.remove();
-  inputToMainScreen();
-  //Total expense (existing + new)
-  let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
-  const planedBalance = parseFloat(plannedBalanceAmnt.innerText) - sumExpense;
-  plannedBalanceAmnt.innerText = planedBalance;
-  listCreatorExpense(inputName.value, inputAmnt.value);
-  
-  //Empty inputs
-  inputName.value = "";
-  inputAmnt.value = "";
+  if (isPaid) {
+    balanceAmnt.innerText = parseFloat(currentBalance) + parseFloat(parentAmount);
+    plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
+    debtsAmnt.innerText = parseFloat(debtsAmnt.innerText) - parseFloat(parentAmount);
+    parentDiv.remove();
+  } else {
+    plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
+    parentDiv.remove();
   }
-});
+};
 
 const listCreatorDebt = (expenseName, expenseValue) => {
   let paidCheck = false;
@@ -379,32 +269,14 @@ const listCreatorDebt = (expenseName, expenseValue) => {
   newTile.classList.add("tile");
   list.appendChild(newTile);
   let clicked = false;
-  newTile.addEventListener("click", () => {
-    if (clicked == false){
-      newTile.classList.add("active");
-      newTile.style.marginBottom= "70px";
-      clicked = true;
-      console.log(clicked);
-      return;
-    }
-    if (clicked == true){
-      newTile.classList.remove("active");
-      newTile.style.marginBottom= "20px";
-      clicked = false;
-      console.log(clicked);
-      return;
-    }
-  });
   newTile.innerHTML = `<div class="name debt">${expenseName}</div><div class="amount debt">${expenseValue}</div> <div class="tilePLN debt">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
-  tileControlsWraper.classList.add("tileControlsWraper")
-  newTile.appendChild(tileControlsWraper);
+  tileControlsWraper.classList.add("tileControlsWraper");
   let editButton = document.createElement("div");
   editButton.classList.add("editBtn");
   let editButtonIcon = document.createElement("span");
   editButtonIcon.innerHTML = `<span class="btnIcon adjustEditIcon material-symbols-rounded">edit_square</span>`;
   editButton.appendChild(editButtonIcon);
-
   editButton.addEventListener("click", () => {
     modifyDebts(editButton, true);
   });
@@ -428,54 +300,136 @@ const listCreatorDebt = (expenseName, expenseValue) => {
   checkoutBtnIcon.classList.add("btnIcon", "adjustCheckIcon", "material-symbols-rounded")
   checkoutBtnIcon.innerHTML =  `payments`;
   checkoutBtn.appendChild(checkoutBtnIcon);
-
   checkoutBtn.addEventListener("click", () =>{
     let tempParent  = checkoutBtn.parentElement;
     let parentDiv = tempParent.parentElement;
     let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
-    parentDiv.style.background = "#7d281f";
-    tempParent.style.opacity = "50%";
-    //Total expense (existing + new)
     let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
     debtsAmnt.innerText = sumDebt;
-    //Total balance(budget - total expense)
     const totalBalance = parseFloat(balanceAmnt.innerText) - newDebt;
     balanceAmnt.innerText = totalBalance;
+    parentDiv.style.opacity = "50%";
+    tileControlsWraper.classList.remove("left");
+    newTile.classList.remove("left");
+    leftTouchpad.style.width = "120px";
+    rightTouchpad.style.width = "120px";
+    clicked = false;
+
+
+
     paidCheck = true;
-    
   });
+  let tileWraper = document.createElement("div");
+  tileWraper.classList.add("tileWraper");
   tileControlsWraper.appendChild(editButton);
   tileControlsWraper.appendChild(deleteButton);
   tileControlsWraper.appendChild(checkoutBtn);
-  document.querySelector(".list").appendChild(newTile);
+  document.querySelector(".list").appendChild(tileWraper);
+  tileWraper.appendChild(newTile);
+  tileWraper.appendChild(tileControlsWraper);
   newTile.style.backgroundColor = "var(--debtsTile)";
-  
- 
-
+  let leftTouchpad = document.createElement("div");
+  leftTouchpad.classList.add("leftTouchpad");
+  let rightTouchpad = document.createElement("div");
+  rightTouchpad.classList.add("rightTouchpad");
+  newTile.appendChild(leftTouchpad);
+  newTile.appendChild(rightTouchpad);
+  rightTouchpad.addEventListener("click", () => {
+    if (clicked == false) {
+      newTile.classList.add("left");
+      tileControlsWraper.classList.add("active");
+      rightTouchpad.style.width = "300px";
+      leftTouchpad.style.width = "0px";
+      clicked = true;
+      console.log(clicked);
+      return;
+    }
+    if (clicked == true) {
+      tileControlsWraper.classList.remove("left");
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      clicked = false;
+      console.log(clicked);
+      return;
+    }
+  });
+  leftTouchpad.addEventListener("click", () => {
+    if (clicked == false) {
+      newTile.classList.add("right");
+      tileControlsWraper.classList.add("active");
+      rightTouchpad.style.width = "0px";
+      leftTouchpad.style.width = "300px";
+      clicked = true;
+      console.log(clicked);
+      return;
+    }
+    if (clicked == true) {
+      tileControlsWraper.classList.remove("left");
+      newTile.classList.remove("right");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      clicked = false;
+      console.log(clicked);
+      return;
+    }
+  });
 };
 
-debtBtn.addEventListener ("click", () => {
-category = "debt";
-inputToMainScreen();
-let newDebt = parseFloat(inputAmnt.value);
-
-  //Total debt (existing + new)
-  let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
-  const planedBalance = parseFloat(plannedBalanceAmnt.innerText) - sumDebt;
-  plannedBalanceAmnt.innerText = planedBalance;
-
-  listCreatorDebt(inputName.value, inputAmnt.value);
-  
-  //Empty inputs
-  inputName.value = "";
-  inputAmnt.value = "";
-
+expenseBtn.addEventListener("click", () => {
+  category = "expense";
+  let newExpense = parseFloat(inputAmnt.value);
+  if (inputName.value == "" || inputAmnt.value == "") {
+    inputName.classList.add("error");
+    inputAmnt.classList.add("error");
+    setTimeout(function () {
+      inputName.classList.remove("error");
+      inputAmnt.classList.remove("error");
+      return;
+    }, 300);
+  } else {
+    let inputsTouchpad = document.querySelector(".inputsTouchpad");
+    inputsTouchpad.remove();
+    inputToMainScreen();
+    let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
+    const planedBalance = parseFloat(plannedBalanceAmnt.innerText) - sumExpense;
+    plannedBalanceAmnt.innerText = planedBalance;
+    listCreatorExpense(inputName.value, inputAmnt.value);
+    inputName.value = "";
+    inputAmnt.value = "";
+  }
 });
 
+debtBtn.addEventListener ("click", () => {
+  category = "debt";
+ let newDebt = parseFloat(inputAmnt.value);
+  if (inputName.value == "" || inputAmnt.value == "") {
+    inputName.classList.add("error");
+    inputAmnt.classList.add("error");
+    setTimeout(function () {
+      inputName.classList.remove("error");
+      inputAmnt.classList.remove("error");
+      return;
+    }, 300);
+  } else {
+    let inputsTouchpad = document.querySelector(".inputsTouchpad");
+    inputsTouchpad.remove();
+    inputToMainScreen();
+    let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
+    const planedBalance = parseFloat(plannedBalanceAmnt.innerText) - sumDebt;
+    plannedBalanceAmnt.innerText = planedBalance;
+    listCreatorDebt(inputName.value, inputAmnt.value);
+    inputName.value = "";
+    inputAmnt.value = "";
+  }
+});
 
-
-
-
+inputName.addEventListener("click", () => {
+  window.scrollTo(0, document.body.scrollHeight);
+});
+inputAmnt.addEventListener("click", () => {
+  window.scrollTo(0, document.body.scrollHeight);
+});
 addBtn.addEventListener ("click", showInput);
 setBtn.addEventListener ("click", showSettings);
 SetConfirmBtn.addEventListener ("click", setBalance);
