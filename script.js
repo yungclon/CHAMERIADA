@@ -23,14 +23,188 @@ const debtsAmnt = document.querySelector(".debtsAmnt");
 const expensesAmnt = document.querySelector(".expensesAmnt");
 const setInput = document.querySelector(".setInput");
 let debts = 0.00;
+
+
 // HOLDERS
 let plannedBalanceHolder = 0.0;
 let plannedExpensesHolder = 0.0;
 let plannedDebtsHolder = 0.0;
-
 let category = ""
 let dashboardExpanded = false;
 let body = document.querySelector("body");
+const fromDb = undefined;
+let listArray =  [];
+
+
+let listArray_deserialized = JSON.parse(localStorage.getItem("listArraySaved"));
+
+
+  // console.log(listArray);
+  // console.log(listArray_deserialized);
+
+
+
+
+const listCreatorExpense_storage = (expenseName, expenseValue) => {
+  let checkoutClick = false;
+  let left = true;
+  let right = true;
+  let paidCheck = false;
+  let newTile = document.createElement("div");
+  newTile.classList.add("tile");
+  list.appendChild(newTile);
+  newTile.innerHTML = `<div class="name expense">${expenseName}</div><div class="amount expense">${expenseValue}</div> <div class="tilePLN expense">PLN</div>`;
+  let tileControlsWraper = document.createElement("div");
+  tileControlsWraper.classList.add("tileControlsWraper");
+  let editButton = document.createElement("div");
+  editButton.classList.add("editBtn");
+  let editButtonIcon = document.createElement("span");
+  editButtonIcon.innerHTML = `<span class="btnIcon adjustEditIcon material-symbols-rounded">edit_square</span>`;
+  editButton.appendChild(editButtonIcon);
+  editButton.addEventListener("click", () => {
+    modifyExpenses(editButton, true);
+  });
+  let deleteButton = document.createElement("div");
+  deleteButton.classList.add("delBtn");
+  let deleteButtonIcon = document.createElement("span");
+  deleteButtonIcon.classList.add("btnIcon", "material-symbols-rounded");
+  deleteButtonIcon.innerHTML = `delete`;
+  deleteButton.appendChild(deleteButtonIcon);
+  deleteButton.addEventListener("click", () => {
+    if (paidCheck == true) {
+      modifyExpenses(deleteButton, false, true);
+    } else {
+      modifyExpenses(deleteButton);
+      let listArray_deserialized = JSON.parse(
+        localStorage.getItem("listArraySaved")
+      );
+
+      let deleted = listArray_deserialized.find(
+        (obj) =>
+          obj.expenseName == expenseName && obj.expenseValue == expenseValue
+      );
+      listArray_deserialized.splice(listArray_deserialized.indexOf(deleted), 1);
+      let listArray_serialized = JSON.stringify(listArray_deserialized);
+      localStorage.setItem("listArraySaved", listArray_serialized);
+      console.log(plannedExpensesHolder);
+    }
+  });
+  let checkoutBtn = document.createElement("div");
+  checkoutBtn.classList.add("checkoutBtn");
+  let checkoutBtnIcon = document.createElement("span");
+  checkoutBtnIcon.classList.add(
+    "btnIcon",
+    "adjustCheckIcon",
+    "material-symbols-rounded"
+  );
+  checkoutBtnIcon.innerHTML = `payments`;
+  checkoutBtn.appendChild(checkoutBtnIcon);
+  let tileWraper = document.createElement("div");
+  tileWraper.classList.add("tileWraper");
+  tileControlsWraper.appendChild(editButton);
+  tileControlsWraper.appendChild(deleteButton);
+  tileControlsWraper.appendChild(checkoutBtn);
+  document.querySelector(".list").appendChild(tileWraper);
+  tileWraper.appendChild(newTile);
+  tileWraper.appendChild(tileControlsWraper);
+  newTile.style.backgroundColor = "var(--tile)";
+  let leftTouchpad = document.createElement("div");
+  leftTouchpad.classList.add("leftTouchpad");
+  let rightTouchpad = document.createElement("div");
+  rightTouchpad.classList.add("rightTouchpad");
+  newTile.appendChild(leftTouchpad);
+  newTile.appendChild(rightTouchpad);
+
+  rightTouchpad.addEventListener("click", () => {
+    // MOVE TILE LEFT
+    if (left == true) {
+      newTile.classList.add("left");
+      rightTouchpad.style.width = "300px";
+      leftTouchpad.style.width = "0px";
+      left = false;
+      return;
+    }
+    // MOVE TILE RIGHT
+    if (left == false) {
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      left = true;
+      return;
+    }
+  });
+  checkoutBtn.addEventListener("click", () => {
+    if (checkoutClick == false) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
+      expensesAmnt.innerText = sumExpense.toFixed(2);
+      const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
+      balanceAmnt.innerText = totalBalance.toFixed(2);
+      parentDiv.style.opacity = "50%";
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      paidCheck = true;
+      checkoutClick = true;
+      left = true;
+      return;
+    }
+    if (checkoutClick == true) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumExpense = parseFloat(expensesAmnt.innerText) - newExpense;
+      expensesAmnt.innerText = sumExpense.toFixed(2);
+      const totalBalance = parseFloat(balanceAmnt.innerText) + newExpense;
+      balanceAmnt.innerText = totalBalance.toFixed(2);
+      parentDiv.style.opacity = "100%";
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      paidCheck = false;
+      checkoutClick = false;
+      left = true;
+      return;
+    }
+  });
+  leftTouchpad.addEventListener("click", () => {
+    // MOVE TILE RIGHT
+    if (right == true) {
+      newTile.classList.add("right");
+      tileControlsWraper.classList.add("active");
+      rightTouchpad.style.width = "0px";
+      leftTouchpad.style.width = "300px";
+      right = false;
+      return;
+    }
+    // MOVE TILE LEFT
+    if (right == false) {
+      tileControlsWraper.classList.remove("left");
+      newTile.classList.remove("right");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      right = true;
+      return;
+    }
+  });
+};
+
+if (listArray_deserialized != null) {
+  listArray = listArray_deserialized;
+  console.log(listArray);
+  listArray.forEach((index) => {
+    let newExpense = index.expenseValue;
+    plannedExpensesHolder = plannedExpensesHolder + newExpense;
+  plannedBalanceHolder = plannedBalanceHolder - newExpense;
+  plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+  listCreatorExpense_storage(index.expenseName, index.expenseValue);
+  });
+  // console.log(listArray);
+  // console.log("xdddddd");
+}
+
 dashboard.addEventListener ("click", () => {
   if (dashboardExpanded == false){
     dashboardExpander.classList.add("active");
@@ -132,13 +306,13 @@ const modifyExpenses = (element, edit = false, isPaid = false) => {
     plannedBalanceHolder = plannedBalanceHolder + parseFloat(parentAmount);
     plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
     plannedExpensesHolder = plannedExpensesHolder - parseFloat(parentAmount);
-    expensesAmnt.innerText = plannedExpensesHolder.toFixed(2);
+    expensesAmnt.innerText = parseFloat(plannedExpensesHolder.toFixed(2));
     parentDiv.remove();
   }else{
     plannedBalanceHolder = parseFloat(plannedBalanceHolder) + parseFloat(parentAmount);
     plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
     plannedExpensesHolder = plannedExpensesHolder - parseFloat(parentAmount);
-    expensesAmnt.innerText = plannedExpensesHolder.toFixed(2);
+    expensesAmnt.innerText = parseFloat(plannedExpensesHolder.toFixed(2));
     parentDiv.remove();
   }
 };
@@ -173,6 +347,17 @@ const listCreatorExpense = (expenseName, expenseValue) => {
       modifyExpenses(deleteButton,false,true);
     } else {
       modifyExpenses(deleteButton);
+      let listArray_deserialized = JSON.parse(
+        localStorage.getItem("listArraySaved")
+      );
+      
+      let deleted = listArray_deserialized.find(
+        (obj) =>
+          obj.expenseName == expenseName && obj.expenseValue == expenseValue
+      );
+      listArray_deserialized.splice(listArray_deserialized.indexOf(deleted),1);
+      let listArray_serialized = JSON.stringify(listArray_deserialized);
+      localStorage.setItem("listArraySaved", listArray_serialized);
       }
   });
   let checkoutBtn = document.createElement("div");
@@ -271,6 +456,17 @@ const listCreatorExpense = (expenseName, expenseValue) => {
       return;
     }
   });
+  // let objName = expenseName.innerText;
+  // let objAmnt = expenseValue.innerText;
+
+  let obj = {expenseName , expenseValue};
+  let obj_serialized = JSON.stringify(obj);
+  // console.log(obj_serialized);
+  localStorage.setItem(expenseName, obj_serialized);
+  listArray.push(obj);
+  let listArray_serialized = JSON.stringify(listArray);
+  localStorage.setItem("listArraySaved", listArray_serialized);
+  console.log(listArray_serialized);
 };
 
 
