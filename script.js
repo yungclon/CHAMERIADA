@@ -23,10 +23,14 @@ const debtsAmnt = document.querySelector(".debtsAmnt");
 const expensesAmnt = document.querySelector(".expensesAmnt");
 const setInput = document.querySelector(".setInput");
 let debts = 0.00;
+// HOLDERS
+let plannedBalanceHolder = 0.0;
+let plannedExpensesHolder = 0.0;
+let plannedDebtsHolder = 0.0;
+
 let category = ""
 let dashboardExpanded = false;
 let body = document.querySelector("body");
-
 dashboard.addEventListener ("click", () => {
   if (dashboardExpanded == false){
     dashboardExpander.classList.add("active");
@@ -89,7 +93,6 @@ function inputToMainScreen() {
 	mainScreen.classList.remove("hidden");
   topBar.classList.remove("hidden");
 }
-
 function setBalance(){
   if (setInput.value == "" || setInput.value < 0) {
     setInput.classList.add("error");
@@ -105,15 +108,16 @@ function setBalance(){
     addBtn.classList.remove("hidden");
     setBtn.classList.remove("hidden");
     mainScreen.classList.remove("hidden");
-    balanceAmnt.innerHTML = balance - expensesAmnt.innerText;
-    plannedBalanceAmnt.innerHTML = balance - expensesAmnt.innerText;
+    balanceAmnt.innerHTML = 
+      (balance - parseFloat(expensesAmnt.innerText + debtsAmnt.innerText)).toFixed(2);
+    plannedBalanceHolder = balance - parseFloat(plannedExpensesHolder + plannedDebtsHolder);
+    plannedBalanceAmnt.innerHTML = plannedBalanceHolder.toFixed(2);
+  
   }
 }
 
 const modifyExpenses = (element, edit = false, isPaid = false) => {
   let currentBalance = balanceAmnt.innerText;
-  let currentPlannedBalance= plannedBalanceAmnt.innerText;
-  let currentExpense = expensesAmnt.innerText;
   let tempParent  = element.parentElement;
   let parentDiv = tempParent.parentElement;
   let parentAmount = parentDiv.querySelector(".amount").innerText;
@@ -124,22 +128,29 @@ const modifyExpenses = (element, edit = false, isPaid = false) => {
     inputAmnt.value = parentAmount;
   };
   if (isPaid) {
-    balanceAmnt.innerText = parseFloat(currentBalance) + parseFloat(parentAmount);
-    plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
-    expensesAmnt.innerText = parseFloat(currentExpense) - parseFloat(parentAmount);
+    balanceAmnt.innerText = (parseFloat(currentBalance) + parseFloat(parentAmount)).toFixed(2);
+    plannedBalanceHolder = plannedBalanceHolder + parseFloat(parentAmount);
+    plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+    plannedExpensesHolder = plannedExpensesHolder - parseFloat(parentAmount);
+    expensesAmnt.innerText = plannedExpensesHolder.toFixed(2);
     parentDiv.remove();
   }else{
-    plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
+    plannedBalanceHolder = parseFloat(plannedBalanceHolder) + parseFloat(parentAmount);
+    plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+    plannedExpensesHolder = plannedExpensesHolder - parseFloat(parentAmount);
+    expensesAmnt.innerText = plannedExpensesHolder.toFixed(2);
     parentDiv.remove();
   }
 };
 
 const listCreatorExpense = (expenseName, expenseValue) => {
+  let checkoutClick = false;
+  let left = true;
+  let right = true;
   let paidCheck = false;
   let newTile = document.createElement("div");
   newTile.classList.add("tile");
   list.appendChild(newTile);
-  let clicked = false;
   newTile.innerHTML = `<div class="name expense">${expenseName}</div><div class="amount expense">${expenseValue}</div> <div class="tilePLN expense">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
   tileControlsWraper.classList.add("tileControlsWraper");
@@ -170,43 +181,6 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   checkoutBtnIcon.classList.add("btnIcon", "adjustCheckIcon", "material-symbols-rounded")
   checkoutBtnIcon.innerHTML =  `payments`;
   checkoutBtn.appendChild(checkoutBtnIcon);
-
-  checkoutBtn.addEventListener("click", () =>{
-  if (paidCheck == false) {
-    let tempParent = checkoutBtn.parentElement;
-    let parentDiv = tempParent.parentElement;
-    let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
-    let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
-    expensesAmnt.innerText = sumExpense;
-    const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
-    balanceAmnt.innerText = totalBalance;
-    parentDiv.style.opacity = "50%";
-    tileControlsWraper.classList.remove("left");
-    newTile.classList.remove("left");
-    leftTouchpad.style.width = "120px";
-    rightTouchpad.style.width = "120px";
-    paidCheck = true;
-    return;
-  }
-    if (paidCheck == true) {
-        let tempParent = checkoutBtn.parentElement;
-        let parentDiv = tempParent.parentElement;
-        let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
-        let sumExpense = parseFloat(expensesAmnt.innerText) - newExpense;
-        expensesAmnt.innerText = sumExpense;
-        const totalBalance = parseFloat(balanceAmnt.innerText) + newExpense;
-        balanceAmnt.innerText = totalBalance;
-        parentDiv.style.opacity = "100%";
-        tileControlsWraper.classList.remove("left");
-        newTile.classList.remove("left");
-        leftTouchpad.style.width = "120px";
-        rightTouchpad.style.width = "120px";
-        clicked = false;
-        paidCheck = false;
-        return;
-      }
-
-  });
   let tileWraper = document.createElement("div");
   tileWraper.classList.add("tileWraper");
   tileControlsWraper.appendChild(editButton);
@@ -222,43 +196,78 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   rightTouchpad.classList.add("rightTouchpad");
   newTile.appendChild(leftTouchpad);
   newTile.appendChild(rightTouchpad);
+
   rightTouchpad.addEventListener("click", () => {
-    if (clicked == false){
+    // MOVE TILE LEFT
+    if (left == true) {
       newTile.classList.add("left");
-      tileControlsWraper.classList.add("active");
-      rightTouchpad.style.width = "300px"
-      leftTouchpad.style.width = "0px"
-      clicked = true;
-      console.log(clicked);
+      rightTouchpad.style.width = "300px";
+      leftTouchpad.style.width = "0px";
+      left = false;
       return;
     }
-    if (clicked == true){
-      tileControlsWraper.classList.remove("left");
+    // MOVE TILE RIGHT
+    if (left == false) {
       newTile.classList.remove("left");
-      leftTouchpad.style.width = "120px"
-      rightTouchpad.style.width = "120px"
-      clicked = false;
-      console.log(clicked);
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      left = true;
+      return;
+    }
+  });
+  checkoutBtn.addEventListener("click", () => {
+    if (checkoutClick == false) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
+      expensesAmnt.innerText = sumExpense.toFixed(2);
+      const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
+      balanceAmnt.innerText = totalBalance.toFixed(2);
+      parentDiv.style.opacity = "50%";
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      paidCheck = true;
+      checkoutClick = true;
+      left = true;
+      return;
+    }
+    if (checkoutClick == true) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumExpense = parseFloat(expensesAmnt.innerText) - newExpense;
+      expensesAmnt.innerText = sumExpense.toFixed(2);
+      const totalBalance = parseFloat(balanceAmnt.innerText) + newExpense;
+      balanceAmnt.innerText = totalBalance.toFixed(2);
+      parentDiv.style.opacity = "100%";
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      paidCheck = false;
+      checkoutClick = false;
+      left = true;
       return;
     }
   });
   leftTouchpad.addEventListener("click", () => {
-    if (clicked == false){
+    // MOVE TILE RIGHT
+    if (right == true) {
       newTile.classList.add("right");
       tileControlsWraper.classList.add("active");
-      rightTouchpad.style.width = "0px"
-      leftTouchpad.style.width = "300px"
-      clicked = true;
-      console.log(clicked);
+      rightTouchpad.style.width = "0px";
+      leftTouchpad.style.width = "300px";
+      right = false;
       return;
     }
-    if (clicked == true){
+    // MOVE TILE LEFT
+    if (right == false) {
       tileControlsWraper.classList.remove("left");
       newTile.classList.remove("right");
-      leftTouchpad.style.width = "120px"
-      rightTouchpad.style.width = "120px"
-      clicked = false;
-      console.log(clicked);
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      right = true;
       return;
     }
   });
@@ -268,8 +277,6 @@ const listCreatorExpense = (expenseName, expenseValue) => {
 
 const modifyDebts = (element, edit = false, isPaid = false) => {
   let currentBalance = balanceAmnt.innerText;
-  let currentPlannedBalance = plannedBalanceAmnt.innerText;
-  let currentDebt = debtsAmnt.innerText;
   let tempParent = element.parentElement;
   let parentDiv = tempParent.parentElement;
   let parentAmount = parentDiv.querySelector(".amount").innerText;
@@ -278,24 +285,32 @@ const modifyDebts = (element, edit = false, isPaid = false) => {
     let parentText = parentDiv.querySelector(".name").innerText;
     inputName.value = parentText;
     inputAmnt.value = parentAmount;
-  }
-  if (isPaid) {
-    balanceAmnt.innerText = parseFloat(currentBalance) + parseFloat(parentAmount);
-    plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
-    debtsAmnt.innerText = parseFloat(debtsAmnt.innerText) - parseFloat(parentAmount);
+  };
+  if (isPaid == true) {
+    balanceAmnt.innerText = (parseFloat(currentBalance) + parseFloat(parentAmount)).toFixed(2);
+    plannedBalanceHolder = plannedBalanceHolder + parseFloat(parentAmount);
+    plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+    plannedDebtsHolder = plannedDebtsHolder - parseFloat(parentAmount);
+    debtsAmnt.innerText = plannedDebtsHolder.toFixed(2);
     parentDiv.remove();
   } else {
-    plannedBalanceAmnt.innerText = parseFloat(currentPlannedBalance) + parseFloat(parentAmount);
+    
+    plannedBalanceHolder = parseFloat(plannedBalanceHolder) + parseFloat(parentAmount);
+    plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+    plannedDebtsHolder = plannedDebtsHolder - parseFloat(parentAmount);
+    debtsAmnt.innerText = plannedDebtsHolder.toFixed(2);
     parentDiv.remove();
   }
 };
 
 const listCreatorDebt = (expenseName, expenseValue) => {
+  let checkoutClick = false;
+  let left = true;
+  let right = true;
   let paidCheck = false;
   let newTile = document.createElement("div");
   newTile.classList.add("tile");
   list.appendChild(newTile);
-  let clicked = false;
   newTile.innerHTML = `<div class="name debt">${expenseName}</div><div class="amount debt">${expenseValue}</div> <div class="tilePLN debt">PLN</div>`;
   let tileControlsWraper = document.createElement("div");
   tileControlsWraper.classList.add("tileControlsWraper");
@@ -320,52 +335,12 @@ const listCreatorDebt = (expenseName, expenseValue) => {
       modifyDebts(deleteButton);
       }
   });
-
   let checkoutBtn = document.createElement("div");
   checkoutBtn.classList.add("checkoutBtn");
   let checkoutBtnIcon = document.createElement("span");
   checkoutBtnIcon.classList.add("btnIcon", "adjustCheckIcon", "material-symbols-rounded")
   checkoutBtnIcon.innerHTML =  `payments`;
   checkoutBtn.appendChild(checkoutBtnIcon);
-
-  checkoutBtn.addEventListener("click", () =>{
-    if (paidCheck == false) {
-      let tempParent = checkoutBtn.parentElement;
-      let parentDiv = tempParent.parentElement;
-      let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
-      let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
-      debtsAmnt.innerText = sumDebt;
-      const totalBalance = parseFloat(balanceAmnt.innerText) - newDebt;
-      balanceAmnt.innerText = totalBalance;
-      parentDiv.style.opacity = "50%";
-      tileControlsWraper.classList.remove("left");
-      newTile.classList.remove("left");
-      leftTouchpad.style.width = "120px";
-      rightTouchpad.style.width = "120px";
-      paidCheck = true;
-      return;
-    }
-    if (paidCheck == true) {
-      let tempParent = checkoutBtn.parentElement;
-      let parentDiv = tempParent.parentElement;
-      let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
-      let sumDebt = parseFloat(debtsAmnt.innerText) - newDebt;
-      debtsAmnt.innerText = sumDebt;
-      const totalBalance = parseFloat(balanceAmnt.innerText) + newDebt;
-      balanceAmnt.innerText = totalBalance;
-      parentDiv.style.opacity = "100%";
-      tileControlsWraper.classList.remove("left");
-      newTile.classList.remove("left");
-      leftTouchpad.style.width = "120px";
-      rightTouchpad.style.width = "120px";
-      clicked = false;
-      paidCheck = false;
-      return;
-    }
-
-
-  
-  });
   let tileWraper = document.createElement("div");
   tileWraper.classList.add("tileWraper");
   tileControlsWraper.appendChild(editButton);
@@ -381,43 +356,78 @@ const listCreatorDebt = (expenseName, expenseValue) => {
   rightTouchpad.classList.add("rightTouchpad");
   newTile.appendChild(leftTouchpad);
   newTile.appendChild(rightTouchpad);
+
   rightTouchpad.addEventListener("click", () => {
-    if (clicked == false) {
+    // MOVE TILE LEFT
+    if (left == true) {
       newTile.classList.add("left");
-      tileControlsWraper.classList.add("active");
       rightTouchpad.style.width = "300px";
       leftTouchpad.style.width = "0px";
-      clicked = true;
-      console.log(clicked);
+      left = false;
       return;
     }
-    if (clicked == true) {
-      tileControlsWraper.classList.remove("left");
+    // MOVE TILE RIGHT
+    if (left == false) {
       newTile.classList.remove("left");
       leftTouchpad.style.width = "120px";
       rightTouchpad.style.width = "120px";
-      clicked = false;
-      console.log(clicked);
+      left = true;
+      return;
+    }
+  });
+  checkoutBtn.addEventListener("click", () => {
+    if (checkoutClick == false) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
+      debtsAmnt.innerText = sumDebt.toFixed(2);
+      const totalBalance = parseFloat(balanceAmnt.innerText) - newDebt;
+      balanceAmnt.innerText = totalBalance.toFixed(2);
+      parentDiv.style.opacity = "50%";
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      paidCheck = true;
+      checkoutClick = true;
+      left = true;
+      return;
+    }
+    if (checkoutClick == true) {
+      let tempParent = checkoutBtn.parentElement;
+      let parentDiv = tempParent.parentElement;
+      let newDebt = parseFloat(parentDiv.querySelector(".amount").innerText);
+      let sumDebt = parseFloat(debtsAmnt.innerText) - newDebt;
+      debtsAmnt.innerText = sumDebt.toFixed(2);
+      const totalBalance = parseFloat(balanceAmnt.innerText) + newDebt;
+      balanceAmnt.innerText = totalBalance.toFixed(2);
+      parentDiv.style.opacity = "100%";
+      newTile.classList.remove("left");
+      leftTouchpad.style.width = "120px";
+      rightTouchpad.style.width = "120px";
+      paidCheck = false;
+      checkoutClick = false;
+      left = true;
       return;
     }
   });
   leftTouchpad.addEventListener("click", () => {
-    if (clicked == false) {
+    // MOVE TILE RIGHT
+    if (right == true) {
       newTile.classList.add("right");
       tileControlsWraper.classList.add("active");
       rightTouchpad.style.width = "0px";
       leftTouchpad.style.width = "300px";
-      clicked = true;
-      console.log(clicked);
+      right = false;
       return;
     }
-    if (clicked == true) {
+    // MOVE TILE LEFT
+    if (right == false) {
       tileControlsWraper.classList.remove("left");
       newTile.classList.remove("right");
       leftTouchpad.style.width = "120px";
       rightTouchpad.style.width = "120px";
-      clicked = false;
-      console.log(clicked);
+      right = true;
       return;
     }
   });
@@ -438,10 +448,14 @@ expenseBtn.addEventListener("click", () => {
     let inputsTouchpad = document.querySelector(".inputsTouchpad");
     inputsTouchpad.remove();
     inputToMainScreen();
-    let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
-    const planedBalance = parseFloat(plannedBalanceAmnt.innerText) - sumExpense;
-    plannedBalanceAmnt.innerText = planedBalance;
-    listCreatorExpense(inputName.value, inputAmnt.value);
+    plannedExpensesHolder = plannedExpensesHolder + newExpense;
+    // expensesAmnt.innerText = plannedExpensesHolder.toFixed(2);
+    plannedBalanceHolder = plannedBalanceHolder - newExpense;
+    plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+    listCreatorExpense (
+      inputName.value, 
+      parseFloat(inputAmnt.value).toFixed(2)
+    );
     inputName.value = "";
     inputAmnt.value = "";
   }
@@ -449,7 +463,7 @@ expenseBtn.addEventListener("click", () => {
 
 debtBtn.addEventListener ("click", () => {
   category = "debt";
- let newDebt = parseFloat(inputAmnt.value);
+  let newDebt = parseFloat(inputAmnt.value);
   if (inputName.value == "" || inputAmnt.value == "") {
     inputName.classList.add("error");
     inputAmnt.classList.add("error");
@@ -462,10 +476,14 @@ debtBtn.addEventListener ("click", () => {
     let inputsTouchpad = document.querySelector(".inputsTouchpad");
     inputsTouchpad.remove();
     inputToMainScreen();
-    let sumDebt = parseFloat(debtsAmnt.innerText) + newDebt;
-    const planedBalance = parseFloat(plannedBalanceAmnt.innerText) - sumDebt;
-    plannedBalanceAmnt.innerText = planedBalance;
-    listCreatorDebt(inputName.value, inputAmnt.value);
+    plannedDebtsHolder = plannedDebtsHolder + newDebt;
+    // debtsAmnt.innerText = plannedDebtsHolder.toFixed(2);
+    plannedBalanceHolder = plannedBalanceHolder - plannedDebtsHolder;
+    plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+    listCreatorDebt (
+      inputName.value,
+      parseFloat(inputAmnt.value).toFixed(2)
+    );
     inputName.value = "";
     inputAmnt.value = "";
   }
