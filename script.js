@@ -39,17 +39,15 @@ let listArray =  [];
 let listArray_deserialized = JSON.parse(localStorage.getItem("listArraySaved"));
 
 
-  // console.log(listArray);
-  // console.log(listArray_deserialized);
 
 
 
 
-const listCreatorExpense_storage = (expenseName, expenseValue) => {
+const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) => {
+  
   let checkoutClick = false;
   let left = true;
   let right = true;
-  let paidCheck = false;
   let newTile = document.createElement("div");
   newTile.classList.add("tile");
   list.appendChild(newTile);
@@ -70,6 +68,7 @@ const listCreatorExpense_storage = (expenseName, expenseValue) => {
   deleteButtonIcon.classList.add("btnIcon", "material-symbols-rounded");
   deleteButtonIcon.innerHTML = `delete`;
   deleteButton.appendChild(deleteButtonIcon);
+
   deleteButton.addEventListener("click", () => {
     if (paidCheck == true) {
       modifyExpenses(deleteButton, false, true);
@@ -86,7 +85,6 @@ const listCreatorExpense_storage = (expenseName, expenseValue) => {
       listArray_deserialized.splice(listArray_deserialized.indexOf(deleted), 1);
       let listArray_serialized = JSON.stringify(listArray_deserialized);
       localStorage.setItem("listArraySaved", listArray_serialized);
-      console.log(plannedExpensesHolder);
     }
   });
   let checkoutBtn = document.createElement("div");
@@ -133,6 +131,25 @@ const listCreatorExpense_storage = (expenseName, expenseValue) => {
       return;
     }
   });
+
+  if (paidCheck == true){
+  let tempParent = checkoutBtn.parentElement;
+  let parentDiv = tempParent.parentElement;
+  let newExpense = parseFloat(parentDiv.querySelector(".amount").innerText);
+  let sumExpense = parseFloat(expensesAmnt.innerText) + newExpense;
+  expensesAmnt.innerText = sumExpense.toFixed(2);
+  const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
+  balanceAmnt.innerText = totalBalance.toFixed(2);
+  parentDiv.style.opacity = "50%";
+  newTile.classList.remove("left");
+  leftTouchpad.style.width = "120px";
+  rightTouchpad.style.width = "120px";
+  paidCheck = true;
+  checkoutClick = true;
+  left = true;
+  return;
+  };
+
   checkoutBtn.addEventListener("click", () => {
     if (checkoutClick == false) {
       let tempParent = checkoutBtn.parentElement;
@@ -149,6 +166,17 @@ const listCreatorExpense_storage = (expenseName, expenseValue) => {
       paidCheck = true;
       checkoutClick = true;
       left = true;
+      console.log(expenseName, expenseValue, ID, paidCheck);
+      // let listArray_deserialized_local= JSON.parse(localStorage.getItem("listArraySaved"));
+      console.log(listArray);
+      let thisObj = listArray[ID];
+      console.log(thisObj);
+      thisObj.paidChecker = paidCheck;
+      // thisObj.paidChecker = paidCheck;
+
+      let listArray_serialized_local = JSON.stringify(listArray);
+      console.log(listArray_serialized_local);
+      localStorage.setItem("listArraySaved", listArray_serialized_local);
       return;
     }
     if (checkoutClick == true) {
@@ -161,7 +189,7 @@ const listCreatorExpense_storage = (expenseName, expenseValue) => {
       balanceAmnt.innerText = totalBalance.toFixed(2);
       parentDiv.style.opacity = "100%";
       newTile.classList.remove("left");
-      leftTouchpad.style.width = "120px";
+    leftTouchpad.style.width = "120px";
       rightTouchpad.style.width = "120px";
       paidCheck = false;
       checkoutClick = false;
@@ -189,20 +217,21 @@ const listCreatorExpense_storage = (expenseName, expenseValue) => {
       return;
     }
   });
+//   let paidChecker = paidCheck;
+// let obj = { ID, expenseName, expenseValue, paidChecker };
+
 };
 
 if (listArray_deserialized != null) {
   listArray = listArray_deserialized;
-  console.log(listArray);
   listArray.forEach((index) => {
+    let newXdId = index.ID;
     let newExpense = index.expenseValue;
     plannedExpensesHolder = plannedExpensesHolder + newExpense;
   plannedBalanceHolder = plannedBalanceHolder - newExpense;
   plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
-  listCreatorExpense_storage(index.expenseName, index.expenseValue);
+  listCreatorExpense_storage(index.expenseName, index.expenseValue, newXdId, index.paidChecker);
   });
-  // console.log(listArray);
-  // console.log("xdddddd");
 }
 
 dashboard.addEventListener ("click", () => {
@@ -317,11 +346,11 @@ const modifyExpenses = (element, edit = false, isPaid = false) => {
   }
 };
 
-const listCreatorExpense = (expenseName, expenseValue) => {
+const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
+  let paidChecker = false;
   let checkoutClick = false;
   let left = true;
   let right = true;
-  let paidCheck = false;
   let newTile = document.createElement("div");
   newTile.classList.add("tile");
   list.appendChild(newTile);
@@ -339,32 +368,36 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   let deleteButton = document.createElement("div");
   deleteButton.classList.add("delBtn");
   let deleteButtonIcon = document.createElement("span");
-  deleteButtonIcon.classList.add("btnIcon", "material-symbols-rounded")
+  deleteButtonIcon.classList.add("btnIcon", "material-symbols-rounded");
   deleteButtonIcon.innerHTML = `delete`;
   deleteButton.appendChild(deleteButtonIcon);
   deleteButton.addEventListener("click", () => {
-    if (paidCheck == true){
-      modifyExpenses(deleteButton,false,true);
+    if (paidCheck == true) {
+      modifyExpenses(deleteButton, false, true);
     } else {
       modifyExpenses(deleteButton);
       let listArray_deserialized = JSON.parse(
         localStorage.getItem("listArraySaved")
       );
-      
+
       let deleted = listArray_deserialized.find(
         (obj) =>
           obj.expenseName == expenseName && obj.expenseValue == expenseValue
       );
-      listArray_deserialized.splice(listArray_deserialized.indexOf(deleted),1);
+      listArray_deserialized.splice(listArray_deserialized.indexOf(deleted), 1);
       let listArray_serialized = JSON.stringify(listArray_deserialized);
       localStorage.setItem("listArraySaved", listArray_serialized);
-      }
+    }
   });
   let checkoutBtn = document.createElement("div");
   checkoutBtn.classList.add("checkoutBtn");
   let checkoutBtnIcon = document.createElement("span");
-  checkoutBtnIcon.classList.add("btnIcon", "adjustCheckIcon", "material-symbols-rounded")
-  checkoutBtnIcon.innerHTML =  `payments`;
+  checkoutBtnIcon.classList.add(
+    "btnIcon",
+    "adjustCheckIcon",
+    "material-symbols-rounded"
+  );
+  checkoutBtnIcon.innerHTML = `payments`;
   checkoutBtn.appendChild(checkoutBtnIcon);
   let tileWraper = document.createElement("div");
   tileWraper.classList.add("tileWraper");
@@ -374,7 +407,7 @@ const listCreatorExpense = (expenseName, expenseValue) => {
   document.querySelector(".list").appendChild(tileWraper);
   tileWraper.appendChild(newTile);
   tileWraper.appendChild(tileControlsWraper);
-	newTile.style.backgroundColor = "var(--tile)";
+  newTile.style.backgroundColor = "var(--tile)";
   let leftTouchpad = document.createElement("div");
   leftTouchpad.classList.add("leftTouchpad");
   let rightTouchpad = document.createElement("div");
@@ -416,6 +449,16 @@ const listCreatorExpense = (expenseName, expenseValue) => {
       paidCheck = true;
       checkoutClick = true;
       left = true;
+
+      let listArray_deserialized = JSON.parse(
+        localStorage.getItem("listArraySaved")
+      );
+      let thisObj = listArray_deserialized[obj.ID];
+      thisObj.paidChecker = paidCheck;
+       let listArray_serialized = JSON.stringify(listArray_deserialized);
+       localStorage.setItem("listArraySaved", listArray_serialized);
+
+
       return;
     }
     if (checkoutClick == true) {
@@ -456,17 +499,14 @@ const listCreatorExpense = (expenseName, expenseValue) => {
       return;
     }
   });
-  // let objName = expenseName.innerText;
-  // let objAmnt = expenseValue.innerText;
 
-  let obj = {expenseName , expenseValue};
-  let obj_serialized = JSON.stringify(obj);
-  // console.log(obj_serialized);
-  localStorage.setItem(expenseName, obj_serialized);
+  let obj = { ID, expenseName, expenseValue, paidChecker };
   listArray.push(obj);
+  let newID = listArray.indexOf(obj);
+  obj.ID = newID;
+  listArray[newID].ID = newID;
   let listArray_serialized = JSON.stringify(listArray);
   localStorage.setItem("listArraySaved", listArray_serialized);
-  console.log(listArray_serialized);
 };
 
 
@@ -648,9 +688,13 @@ expenseBtn.addEventListener("click", () => {
     // expensesAmnt.innerText = plannedExpensesHolder.toFixed(2);
     plannedBalanceHolder = plannedBalanceHolder - newExpense;
     plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+    let xdID = 0;
+    let paidCheck = false;
     listCreatorExpense (
       inputName.value, 
-      parseFloat(inputAmnt.value).toFixed(2)
+      parseFloat(inputAmnt.value).toFixed(2),
+      xdID,
+      paidCheck
     );
     inputName.value = "";
     inputAmnt.value = "";
@@ -692,5 +736,6 @@ inputAmnt.addEventListener("click", () => {
   window.scrollTo(0, document.body.scrollHeight);
 });
 addBtn.addEventListener ("click", showInput);
-setBtn.addEventListener ("click", showSettings);
+// setBtn.addEventListener ("click", showSettings);
+setBtn.addEventListener ("click", localStorage.clear());
 SetConfirmBtn.addEventListener ("click", setBalance);
