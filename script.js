@@ -37,11 +37,19 @@ let listArray =  [];
 
 
 let listArray_deserialized = JSON.parse(localStorage.getItem("listArraySaved"));
+let plannedBalanceHolder_deserialized = JSON.parse(localStorage.getItem("plannedBalanceHolder"));
+let balance_saver_unserialized = JSON.parse(localStorage.getItem("balance_saver"));
 
 
 
 
-
+if(balance_saver_unserialized > 0) {
+  balanceAmnt.innerHTML = balance_saver_unserialized;
+   plannedBalanceHolder = plannedBalanceHolder_deserialized;
+    //  balanceAmnt.innerHTML -
+    //   parseFloat(plannedExpensesHolder);
+   plannedBalanceAmnt.innerHTML = plannedBalanceHolder.toFixed(2);
+};
 
 const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) => {
   
@@ -74,15 +82,17 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
       modifyExpenses(deleteButton, false, true);
     } else {
       modifyExpenses(deleteButton);
-      let listArray_deserialized = JSON.parse(
-        localStorage.getItem("listArraySaved")
-      );
-
-      let deleted = listArray_deserialized.find(
-        (obj) =>
-          obj.expenseName == expenseName && obj.expenseValue == expenseValue
-      );
-      listArray_deserialized.splice(listArray_deserialized.indexOf(deleted), 1);
+     if(listArray_deserialized.length > 1){
+      listArray_deserialized.splice(ID, 1);
+      listArray_deserialized.forEach((object) => {
+        let index_nr = listArray_deserialized.indexOf(object);
+        object.ID = index_nr;
+        console.log(listArray_deserialized);
+      });
+    }
+      if(listArray_deserialized.length == 1){
+        listArray_deserialized= [];
+      };
       let listArray_serialized = JSON.stringify(listArray_deserialized);
       localStorage.setItem("listArraySaved", listArray_serialized);
     }
@@ -131,7 +141,7 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
       return;
     }
   });
-
+    // checkout test
   if (paidCheck == true){
   let tempParent = checkoutBtn.parentElement;
   let parentDiv = tempParent.parentElement;
@@ -141,13 +151,11 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
   const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
   balanceAmnt.innerText = totalBalance.toFixed(2);
   parentDiv.style.opacity = "50%";
-  newTile.classList.remove("left");
-  leftTouchpad.style.width = "120px";
-  rightTouchpad.style.width = "120px";
-  paidCheck = true;
-  checkoutClick = true;
-  left = true;
-  return;
+  
+  // paidCheck = true;
+  // checkoutClick = true;
+  // left = true;
+  
   };
 
   checkoutBtn.addEventListener("click", () => {
@@ -222,8 +230,10 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
 
 };
 
+
 if (listArray_deserialized != null) {
   listArray = listArray_deserialized;
+  console.log(listArray);
   listArray.forEach((index) => {
     let newXdId = index.ID;
     let newExpense = index.expenseValue;
@@ -315,6 +325,8 @@ function setBalance(){
       (balance - parseFloat(expensesAmnt.innerText + debtsAmnt.innerText)).toFixed(2);
     plannedBalanceHolder = balance - parseFloat(plannedExpensesHolder + plannedDebtsHolder);
     plannedBalanceAmnt.innerHTML = plannedBalanceHolder.toFixed(2);
+    let balance_saver_serialized = JSON.stringify(balanceAmnt.innerHTML);
+    localStorage.setItem("balance_saver", balance_saver_serialized);
   
   }
 }
@@ -352,6 +364,14 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
   let left = true;
   let right = true;
   let newTile = document.createElement("div");
+   let obj = { ID, expenseName, expenseValue, paidChecker };
+   listArray.push(obj);
+   let newID = listArray.indexOf(obj);
+   obj.ID = newID;
+   listArray[newID].ID = newID;
+   let listArray_serialized = JSON.stringify(listArray);
+   localStorage.setItem("listArraySaved", listArray_serialized);
+
   newTile.classList.add("tile");
   list.appendChild(newTile);
   newTile.innerHTML = `<div class="name expense">${expenseName}</div><div class="amount expense">${expenseValue}</div> <div class="tilePLN expense">PLN</div>`;
@@ -376,15 +396,8 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
       modifyExpenses(deleteButton, false, true);
     } else {
       modifyExpenses(deleteButton);
-      let listArray_deserialized = JSON.parse(
-        localStorage.getItem("listArraySaved")
-      );
-
-      let deleted = listArray_deserialized.find(
-        (obj) =>
-          obj.expenseName == expenseName && obj.expenseValue == expenseValue
-      );
-      listArray_deserialized.splice(listArray_deserialized.indexOf(deleted), 1);
+      console.log(obj.ID);
+      listArray.splice(obj.ID, 1);
       let listArray_serialized = JSON.stringify(listArray_deserialized);
       localStorage.setItem("listArraySaved", listArray_serialized);
     }
@@ -450,12 +463,12 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
       checkoutClick = true;
       left = true;
 
-      let listArray_deserialized = JSON.parse(
-        localStorage.getItem("listArraySaved")
-      );
-      let thisObj = listArray_deserialized[obj.ID];
+      // let listArray_deserialized = JSON.parse(
+      //   localStorage.getItem("listArraySaved")
+      // );
+      let thisObj = listArray[ID];
       thisObj.paidChecker = paidCheck;
-       let listArray_serialized = JSON.stringify(listArray_deserialized);
+       let listArray_serialized = JSON.stringify(listArray);
        localStorage.setItem("listArraySaved", listArray_serialized);
 
 
@@ -500,13 +513,7 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
     }
   });
 
-  let obj = { ID, expenseName, expenseValue, paidChecker };
-  listArray.push(obj);
-  let newID = listArray.indexOf(obj);
-  obj.ID = newID;
-  listArray[newID].ID = newID;
-  let listArray_serialized = JSON.stringify(listArray);
-  localStorage.setItem("listArraySaved", listArray_serialized);
+ 
 };
 
 
@@ -736,6 +743,10 @@ inputAmnt.addEventListener("click", () => {
   window.scrollTo(0, document.body.scrollHeight);
 });
 addBtn.addEventListener ("click", showInput);
-// setBtn.addEventListener ("click", showSettings);
-setBtn.addEventListener ("click", localStorage.clear());
+setBtn.addEventListener ("click", showSettings);
 SetConfirmBtn.addEventListener ("click", setBalance);
+
+let listArray_serialized_final = JSON.stringify(listArray);
+let balance_final = JSON.stringify(balanceAmnt.innerHTML);
+localStorage.setItem("balance_saver", balance_final);
+localStorage.setItem("listArraySaved", listArray_serialized_final);
