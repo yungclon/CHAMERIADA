@@ -35,18 +35,31 @@ let body = document.querySelector("body");
 const fromDb = undefined;
 let listArray =  [];
 
-balanceCheck = 
 
 console.log(localStorage);
 let listArray_deserialized = JSON.parse(localStorage.getItem("listArraySaved"));
+
 //let plannedBalanceHolder_deserialized = JSON.parse(localStorage.getItem("plannedBalanceHolder"));
-let balance_saver_unserialized = JSON.parse(localStorage.getItem("balance_saver"));
+let balance_saver_serialized = localStorage.getItem("balance_saver");
 
+console.log(balance_saver_serialized);
 
-console.log(balance_saver_unserialized);
+if (balance_saver_serialized == undefined){
+let balance_saver_unserialized = 0;
+console.log(balance_saver_serialized);
+  balanceAmnt.innerHTML = balance_saver_unserialized.toFixed(2);
+  plannedBalanceHolder = balance_saver_unserialized;
+   plannedBalanceAmnt.innerText = balance_saver_unserialized.toFixed(2); 
+  
+   
+   
+};
 
-if(balance_saver_unserialized != undefined) {
-console.log(balance_saver_unserialized);
+  
+
+if(balance_saver_serialized != undefined) {
+let balance_saver_unserialized = JSON.parse(balance_saver_serialized);
+console.log(balance_saver_serialized);
   balanceAmnt.innerHTML = balance_saver_unserialized;
   plannedBalanceHolder = balance_saver_unserialized;
    plannedBalanceAmnt.innerText = balance_saver_unserialized; 
@@ -83,9 +96,8 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
 
   deleteButton.addEventListener("click", () => {
     if (paidCheck == true) {
-      modifyExpenses(deleteButton, false, true);
-    } else {
-      modifyExpenses(deleteButton);
+    modifyExpenses(deleteButton, false, true);
+
      if(listArray_deserialized.length > 1){
       listArray_deserialized.splice(ID, 1);
       listArray_deserialized.forEach((object) => {
@@ -93,14 +105,30 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
         object.ID = index_nr;
         console.log(listArray_deserialized);
       });
-    }
+      }
+      if(listArray_deserialized.length == 1){
+        listArray_deserialized= [];
+      }
+  
+
+
+    } else {
+      modifyExpenses(deleteButton);
+      if(listArray_deserialized.length > 1){
+      listArray_deserialized.splice(ID, 1);
+      listArray_deserialized.forEach((object) => {
+        let index_nr = listArray_deserialized.indexOf(object);
+        object.ID = index_nr;
+        console.log(listArray_deserialized);
+      });
+      }
       if(listArray_deserialized.length == 1){
         listArray_deserialized= [];
       };
       let listArray_serialized = JSON.stringify(listArray_deserialized);
       localStorage.setItem("listArraySaved", listArray_serialized);
     }
-  });
+    });
   let checkoutBtn = document.createElement("div");
   checkoutBtn.classList.add("checkoutBtn");
   let checkoutBtnIcon = document.createElement("span");
@@ -206,6 +234,16 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
       paidCheck = false;
       checkoutClick = false;
       left = true;
+      let thisObj = listArray[ID];
+      console.log(thisObj);
+      thisObj.paidChecker = paidCheck;
+
+      let listArray_serialized_local = JSON.stringify(listArray);
+      console.log(listArray_serialized_local);
+      localStorage.setItem("listArraySaved", listArray_serialized_local);
+
+
+
       return;
     }
   });
@@ -462,10 +500,6 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
       expensesAmnt.innerText = sumExpense.toFixed(2);
       const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
       balanceAmnt.innerText = totalBalance.toFixed(2);
-      localStorage.setItem(
-        "balance_saver",
-        JSON.stringify(totalBalance.innerHTML)
-      );
       parentDiv.style.opacity = "50%";
       newTile.classList.remove("left");
       leftTouchpad.style.width = "120px";
@@ -474,14 +508,15 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
       checkoutClick = true;
       left = true;
 
-      // let listArray_deserialized = JSON.parse(
-      //   localStorage.getItem("listArraySaved")
-      // );
       let thisObj = listArray[ID];
+      console.log(thisObj);
       thisObj.paidChecker = paidCheck;
        let listArray_serialized = JSON.stringify(listArray);
        localStorage.setItem("listArraySaved", listArray_serialized);
-
+        localStorage.setItem(
+          "balance_saver",
+          JSON.stringify(balanceAmnt.innerText)
+        );
 
       return;
     }
@@ -493,6 +528,8 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
       expensesAmnt.innerText = sumExpense.toFixed(2);
       const totalBalance = parseFloat(balanceAmnt.innerText) + newExpense;
       balanceAmnt.innerText = totalBalance.toFixed(2);
+      balanceAmnt.innerText = totalBalance.toFixed(2);
+      
       parentDiv.style.opacity = "100%";
       newTile.classList.remove("left");
       leftTouchpad.style.width = "120px";
@@ -500,8 +537,17 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
       paidCheck = false;
       checkoutClick = false;
       left = true;
+
+      let thisObj = listArray[ID];
+      console.log(thisObj);
+      thisObj.paidChecker = paidCheck;
+      let listArray_serialized = JSON.stringify(listArray);
+      localStorage.setItem("listArraySaved", listArray_serialized);
+      localStorage.setItem("balance_saver", JSON.stringify(balanceAmnt.innerText));
       return;
     }
+
+    console.log(localStorage);
   });
   leftTouchpad.addEventListener("click", () => {
     // MOVE TILE RIGHT
@@ -719,33 +765,33 @@ expenseBtn.addEventListener("click", () => {
   }
 });
 
-debtBtn.addEventListener ("click", () => {
-  category = "debt";
-  let newDebt = parseFloat(inputAmnt.value);
-  if (inputName.value == "" || inputAmnt.value == "") {
-    inputName.classList.add("error");
-    inputAmnt.classList.add("error");
-    setTimeout(function () {
-      inputName.classList.remove("error");
-      inputAmnt.classList.remove("error");
-      return;
-    }, 300);
-  } else {
-    let inputsTouchpad = document.querySelector(".inputsTouchpad");
-    inputsTouchpad.remove();
-    inputToMainScreen();
-    plannedDebtsHolder = plannedDebtsHolder + newDebt;
-    // debtsAmnt.innerText = plannedDebtsHolder.toFixed(2);
-    plannedBalanceHolder = plannedBalanceHolder - plannedDebtsHolder;
-    plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
-    listCreatorDebt (
-      inputName.value,
-      parseFloat(inputAmnt.value).toFixed(2)
-    );
-    inputName.value = "";
-    inputAmnt.value = "";
-  }
-});
+// debtBtn.addEventListener ("click", () => {
+//   category = "debt";
+//   let newDebt = parseFloat(inputAmnt.value);
+//   if (inputName.value == "" || inputAmnt.value == "") {
+//     inputName.classList.add("error");
+//     inputAmnt.classList.add("error");
+//     setTimeout(function () {
+//       inputName.classList.remove("error");
+//       inputAmnt.classList.remove("error");
+//       return;
+//     }, 300);
+//   } else {
+//     let inputsTouchpad = document.querySelector(".inputsTouchpad");
+//     inputsTouchpad.remove();
+//     inputToMainScreen();
+//     plannedDebtsHolder = plannedDebtsHolder + newDebt;
+//     // debtsAmnt.innerText = plannedDebtsHolder.toFixed(2);
+//     plannedBalanceHolder = plannedBalanceHolder - plannedDebtsHolder;
+//     plannedBalanceAmnt.innerText = plannedBalanceHolder.toFixed(2);
+//     listCreatorDebt (
+//       inputName.value,
+//       parseFloat(inputAmnt.value).toFixed(2)
+//     );
+//     inputName.value = "";
+//     inputAmnt.value = "";
+//   }
+// });
 
 inputName.addEventListener("click", () => {
   window.scrollTo(0, document.body.scrollHeight);

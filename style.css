@@ -701,6 +701,7 @@ transform: scale(1.05);
 transform: scale(1);
 }
 .debtCat{
+
 box-shadow: var(--shadowLight);
 background-color:var(--debtsTile);
 font-size: 20px;
