@@ -455,6 +455,10 @@ const listCreatorExpense = (expenseName, expenseValue, ID, paidCheck) => {
       expensesAmnt.innerText = sumExpense.toFixed(2);
       const totalBalance = parseFloat(balanceAmnt.innerText) - newExpense;
       balanceAmnt.innerText = totalBalance.toFixed(2);
+      localStorage.setItem(
+        "balance_saver",
+        JSON.stringify(totalBalance.innerHTML)
+      );
       parentDiv.style.opacity = "50%";
       newTile.classList.remove("left");
       leftTouchpad.style.width = "120px";
