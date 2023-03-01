@@ -35,20 +35,24 @@ let body = document.querySelector("body");
 const fromDb = undefined;
 let listArray =  [];
 
+balanceCheck = 
 
+console.log(localStorage);
 let listArray_deserialized = JSON.parse(localStorage.getItem("listArraySaved"));
-let plannedBalanceHolder_deserialized = JSON.parse(localStorage.getItem("plannedBalanceHolder"));
+//let plannedBalanceHolder_deserialized = JSON.parse(localStorage.getItem("plannedBalanceHolder"));
 let balance_saver_unserialized = JSON.parse(localStorage.getItem("balance_saver"));
 
 
+console.log(balance_saver_unserialized);
 
-
-if(balance_saver_unserialized > 0) {
+if(balance_saver_unserialized != undefined) {
+console.log(balance_saver_unserialized);
   balanceAmnt.innerHTML = balance_saver_unserialized;
-   plannedBalanceHolder = plannedBalanceHolder_deserialized;
-    //  balanceAmnt.innerHTML -
-    //   parseFloat(plannedExpensesHolder);
-   plannedBalanceAmnt.innerHTML = plannedBalanceHolder.toFixed(2);
+  plannedBalanceHolder = balance_saver_unserialized;
+   plannedBalanceAmnt.innerText = balance_saver_unserialized; 
+  
+   
+   
 };
 
 const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) => {
@@ -153,7 +157,7 @@ const listCreatorExpense_storage = (expenseName, expenseValue, ID, paidCheck) =>
   parentDiv.style.opacity = "50%";
   
   // paidCheck = true;
-  // checkoutClick = true;
+  checkoutClick = true;
   // left = true;
   
   };
@@ -243,6 +247,9 @@ if (listArray_deserialized != null) {
   listCreatorExpense_storage(index.expenseName, index.expenseValue, newXdId, index.paidChecker);
   });
 }
+if(plannedBalanceHolder == 0) {
+   plannedBalanceAmnt.innerText = balanceAmnt.innerHTML;
+};
 
 dashboard.addEventListener ("click", () => {
   if (dashboardExpanded == false){
@@ -751,6 +758,6 @@ setBtn.addEventListener ("click", showSettings);
 SetConfirmBtn.addEventListener ("click", setBalance);
 
 let listArray_serialized_final = JSON.stringify(listArray);
-let balance_final = JSON.stringify(balanceAmnt.innerHTML);
-localStorage.setItem("balance_saver", balance_final);
+// let balance_final = JSON.stringify(balanceAmnt.innerHTML);
+// localStorage.setItem("balance_saver", balance_final);
 localStorage.setItem("listArraySaved", listArray_serialized_final);
