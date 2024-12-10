@@ -6,6 +6,7 @@
   <title>CHAMERIADA</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    /* Twoje style CSS pozostają bez zmian */
     body {
       font-family: 'Poppins', sans-serif;
       text-align: center;
@@ -124,7 +125,7 @@
         <td id="Gryczan-points">0 CHAMÓW</td>
       </tr>
       <tr>
-        <td>W0jci4</td>
+        <td>Wjci4</td>
         <td id="W0jci4-points">0 CHAMÓW</td>
       </tr>
       <tr>
@@ -140,10 +141,10 @@
 
   <div class="controls">
     <select id="player-select">
-      <option value="Gryczan">GRYCZAN</option>
-      <option value="W0jci4">WÓJCIA</option>
-      <option value="100kgBALL">KULA</option>
-      <option value="¥ngCl0n">CLON</option>
+      <option value="Gryczan">Gryczan</option>
+      <option value="W0jci4">W0jci4</option>
+      <option value="100kgBALL">100kgBALL</option>
+      <option value="¥ngCl0n">¥ngCl0n</option>
     </select>
     
     <div class="button-row">
@@ -164,6 +165,7 @@
   </div>
 
   <script>
+    // Domyślne punkty graczy
     const defaultPoints = {
       Gryczan: 0,
       W0jci4: 0,
@@ -171,7 +173,8 @@
       "¥ngCl0n": 0
     };
 
-    const points = JSON.parse(localStorage.getItem("chameriadaPoints")) || { ...defaultPoints };
+    // Pobieramy dane z localStorage, jeśli są
+    let points = JSON.parse(localStorage.getItem("chameriadaPoints")) || { ...defaultPoints };
     let selectedPoints = 0;
 
     function getChamEnding(count) {
@@ -187,6 +190,7 @@
         const chamEnding = getChamEnding(pointValue);
         document.getElementById(`${player}-points`).innerText = `${pointValue} ${chamEnding}`;
       }
+      // Zapisz wyniki w localStorage
       localStorage.setItem("chameriadaPoints", JSON.stringify(points));
     }
 
