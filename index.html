@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHAMERIADA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background-color: #1c1c1c;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #e63946;
+      font-weight: 600;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      background: #2c2c2c;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    th {
+      background-color: #e63946;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    td {
+      color: #e0e0e0;
+    }
+
+    tr:nth-child(even) {
+      background-color: #383838;
+    }
+
+    tr:nth-child(odd) {
+      background-color: #2c2c2c;
+    }
+
+    .controls {
+      margin-top: 20px;
+      background: #2c2c2c;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      display: inline-block;
+    }
+
+    .button-row, .action-row {
+      margin: 10px 0;
+    }
+
+    button, select {
+      margin: 5px;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: 1px solid #e63946;
+      border-radius: 5px;
+      background: #383838;
+      color: #e0e0e0;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #d62839;
+      transform: scale(1.05);
+    }
+
+    button:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(230, 57, 70, 0.7);
+    }
+
+    select {
+      width: 50%;
+      box-sizing: border-box;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .button-row button {
+      width: 60px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>CHAMERIADA</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>GRACZ</th>
+        <th>CHAMSY</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboard">
+      <tr>
+        <td>Gryczan</td>
+        <td id="Gryczan-points">0 CHAMÓW</td>
+      </tr>
+      <tr>
+        <td>W0jci4</td>
+        <td id="W0jci4-points">0 CHAMÓW</td>
+      </tr>
+      <tr>
+        <td>100kgBALL</td>
+        <td id="100kgBALL-points">0 CHAMÓW</td>
+      </tr>
+      <tr>
+        <td>¥ngCl0n</td>
+        <td id="¥ngCl0n-points">0 CHAMÓW</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="controls">
+    <select id="player-select">
+      <option value="Gryczan">Gryczan</option>
+      <option value="W0jci4">W0jci4</option>
+      <option value="100kgBALL">100kgBALL</option>
+      <option value="¥ngCl0n">¥ngCl0n</option>
+    </select>
+    
+    <div class="button-row">
+      <button onclick="setPoints(50)">50</button>
+      <button onclick="setPoints(100)">100</button>
+      <button onclick="setPoints(150)">150</button>
+    </div>
+    <div class="button-row">
+      <button onclick="setPoints(300)">300</button>
+      <button onclick="setPoints(500)">500</button>
+      <button onclick="setPoints(1000)">1000</button>
+    </div>
+
+    <div class="action-row">
+      <button onclick="addPoints()">Dodaj</button>
+      <button onclick="subtractPoints()">Odejmij</button>
+    </div>
+  </div>
+
+  <script>
+    const defaultPoints = {
+      Gryczan: 0,
+      W0jci4: 0,
+      "100kgBALL": 0,
+      "¥ngCl0n": 0
+    };
+
+    const points = JSON.parse(localStorage.getItem("chameriadaPoints")) || { ...defaultPoints };
+    let selectedPoints = 0;
+
+    function getChamEnding(count) {
+      const absCount = Math.abs(count);
+      if (absCount === 1) return "CHAM";
+      if (absCount >= 2 && absCount <= 4) return "CHAMY";
+      return "CHAMÓW";
+    }
+
+    function updateTable() {
+      for (const player in points) {
+        const pointValue = points[player];
+        const chamEnding = getChamEnding(pointValue);
+        document.getElementById(`${player}-points`).innerText = `${pointValue} ${chamEnding}`;
+      }
+      localStorage.setItem("chameriadaPoints", JSON.stringify(points));
+    }
+
+    function setPoints(value) {
+      selectedPoints = value;
+    }
+
+    function addPoints() {
+      const player = document.getElementById("player-select").value;
+      if (selectedPoints > 0) {
+        points[player] += selectedPoints;
+        updateTable();
+      }
+    }
+
+    function subtractPoints() {
+      const player = document.getElementById("player-select").value;
+      if (selectedPoints > 0) {
+        points[player] -= selectedPoints;
+        updateTable();
+      }
+    }
+
+    updateTable();
+  </script>
+</body>
+</html>
 
